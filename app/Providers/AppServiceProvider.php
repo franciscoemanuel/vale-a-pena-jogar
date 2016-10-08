@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Providers;
+namespace vapj\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
