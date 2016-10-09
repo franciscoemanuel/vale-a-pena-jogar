@@ -1,13 +1,11 @@
-## Vale a pena jogar? ##
-Projeto criado para a disciplina de projeto integrador I.
+<h1>Vale a pena jogar?</h1>
 
-### Instalação ###
-
-* `git clone https://github.com/franciscoemanuel/vale-a-pena-jogar.git nomeprojeto`
-* `cd nomeprojeto`
-* `composer install`
-* `php artisan key:generate`
-*  Criar banco de dados e informar detalhes de conexão no arquivo .env
-* `php artisan serve` to start the app on http://localhost:8000/
-
-Obs.: Se o arquivo .env não for criado após a execução do comando composer install, deve se criar o arquivo manualmente tendo como exemplo o arquivo .env.example.
+<h3>Instalação</h3>
+<ul>
+<li>git clone https://github.com/franciscoemanuel/vale-a-pena-jogar.git nomeprojeto</li>
+<li>cd nomeprojeto</li>
+<li>composer install</li>
+<li>php artisan key:generate</li>
+<li>Criar banco de dados e informar .env</li>
+<li>php artisan serve para iniciar o servidor em: http://localhost:8000/</li>
+</ul>
