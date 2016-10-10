@@ -2,7 +2,7 @@
 
 @section('conteudo')
 	<div id="container-cadastro">
-		<form action="/cadastrar" method="post">
+		<form action="/cadastro" method="post">
 			<input type="hidden" name="_token" value="{{csrf_token()}}" />
 			<div class="form-group">
 				<label>Nome:</label>
