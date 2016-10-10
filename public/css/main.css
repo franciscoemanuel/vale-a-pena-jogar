@@ -1,0 +1,26 @@
+.logoVA {
+	max-width: 20%;
+	height: auto;
+	position: relative;
+	margin: 1% 0% 1% 0%;
+}
+.borderLinha{
+	border-bottom: solid 2px #ff6624; 
+}
+.linkMenu{
+	margin-right: 0.5%;
+	margin-top: 2%;
+}
+
+.navPrincipal{
+	margin: 1% 4% 0% 4%;
+}
+
+.navMenu{
+	margin-top: 1%;
+	border: solid 1px #000000;
+}
+
+.barraMenu{
+	background-color: #ff6624;
+}
