@@ -1,12 +1,16 @@
 <?php
 
-Route::get('/', function () {
-    return view('layout.principal');
-});
+Route::get('/', 'IndexController@index');
 
-Route::get('/cadastro', 'UsuarioController@cadastro');
+Route::get('/cadastro', 'CadastroController@form');
 
-Route::post('/cadastrar','UsuarioController@cadastrar');
-Auth::routes();
+Route::post('/cadastro','CadastroController@cadastro');
 
-Route::get('/home', 'HomeController@index');
+
+Route::get('/login', 'LoginController@form');
+
+Route::post('/login', 'LoginController@login');
+
+Route::post('/logout', 'LoginController@logout');
+
+//Auth::routes();
