@@ -7,7 +7,7 @@ class IndexController extends Controller
 {
 
     /**
-     * Show the application dashboard.
+     * Mostra a view index.
      *
      * @return \Illuminate\Http\Response
      */

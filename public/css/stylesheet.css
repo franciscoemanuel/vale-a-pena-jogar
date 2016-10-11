@@ -1,6 +1,5 @@
-#container-cadastro{
+div.container-cadastro{
 	position: relative;
-	top: 4em;
-	left: 20em;
+	left: 20%;
 	width: 60%;
 }

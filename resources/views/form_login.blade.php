@@ -9,7 +9,12 @@
                 <div class="panel-body">
                     <form class="form-horizontal" role="form" method="POST" action="/login">
                         {{ csrf_field() }}
-
+                        @if (!empty($errors->all()))
+                           <div class="alert alert-danger">
+                                <span aria-hidden="true" class="glyphicon glyphicon-exclamation-sign"></span>
+                                <strong>Erro ao realizar login.</strong>
+                           </div>
+                        @endif   
                         <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                             <label for="email" class="col-md-4 control-label">E-Mail</label>
 
