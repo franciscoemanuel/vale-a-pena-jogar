@@ -24,7 +24,7 @@ class CadastroRequest extends FormRequest
     public function rules()
     {
         return [
-            'nomeUsuario' => 'required|max:255',
+            'nomeUsuario' => 'required|max:255|unique:usuarios,nomeUsuario',
             'emailUsuario' => 'required|max:255|email|unique:usuarios,emailUsuario',
             'senhaUsuario' => 'required|min:6|confirmed',
             'senhaUsuario_confirmation' => 'required'

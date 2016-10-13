@@ -11,7 +11,7 @@
 		<form action="/cadastro" method="post">
 			<input type="hidden" name="_token" value="{{csrf_token()}}" />
 			<div class="form-group{{ $errors->has('nomeUsuario') ? ' has-error' : '' }}">
-				<label for="nomeUsuario" class="control-label">Nome:</label>
+				<label for="nomeUsuario" class="control-label">Nome do usuário:</label>
 				<input id="nomeUsuario" name="nomeUsuario" class="form-control" autofocus value="{{ old('nomeUsuario') }}" required />
 				 @if ($errors->has('nomeUsuario'))
                     <span class="help-block">

@@ -14,7 +14,7 @@ class LoginController extends Controller
     
     //Método que retorna view de login
     public function form(){
-    	return view("form_login");
+    	return view("usuario.login");
     }
 
     //Método que autentica usuário na aplicação, utilizando métodos da classe AuthenticatesUsers.

@@ -11,6 +11,7 @@
     <!-- Styles -->
     <link href="/css/app.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="css/stylesheet.css">
+    <link rel="stylesheet" type="text/css" href="font-awesome-4.6.3/css/font-awesome.min.css">
     <!-- Scripts -->
     <script>
         window.Laravel = <?php echo json_encode([
@@ -20,7 +21,7 @@
 </head>
 <body>
     <nav class="navbar navbar-default navbar-static-top">
-        <div class="container">
+
             <div class="navbar-header">
 
                 <!-- Collapsed Hamburger -->
@@ -30,25 +31,30 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <img style="width: 50px; height:50px; float: left" src="{{ URL::to('/') }}/images/joystickIcone.png">
-                <!-- Branding Image -->
-                <a class="navbar-brand" href="/">
-                	Vale a pena jogar?
+                <img style="max-width: 13%; max-height: 10%; float: left" src="{{ URL::to('/') }}/images/joystickIcone.png">
+                 <a class="navbar-brand" href="/">
+                    Vale a pena jogar?
                 </a>
-
+                <!-- Branding Image -->
             </div>
             <div class="collapse navbar-collapse" id="app-navbar-collapse">
                 <!-- Left Side Of Navbar -->
                 <ul class="nav navbar-nav">
-                    &nbsp;
+                    <li {{ Request::is('/') ? 'class = active ' : null }} ><a href="/"><span class="glyphicon glyphicon-home"></span> Início <span class="sr-only">(current)</span></a></li>
+                    <li {{ Request::is('/jogos') ? 'class = active ' : null }} ><a href="/jogos"><i class="fa fa-gamepad"></i> Jogos</a></li>
+                    <li {{ Request::is('/listas') ? 'class = active ' : null }} ><a href="/listas"><span class="glyphicon glyphicon-th-list"></span> Listas</a></li>
+                    <li {{ Request::is('/usuarios') ? 'class = active ' : null }} ><a href="/usuarios"><i class="glyphicon glyphicon-user"></i> Usuários</a></li>
+                    <li {{ Request::is('/grupos') ? 'class = active ' : null }} ><a href="/grupos"><i class="fa fa-users"></i> Grupos</a></li>
+                    <li {{ Request::is('/noticias') ? 'class = active ' : null }} ><a href="/noticias"><i class="fa fa-newspaper-o"></i> Notícias</a></li>
                 </ul>
-
                 <!-- Right Side Of Navbar -->
+                <div class="container">
                 <ul class="nav navbar-nav navbar-right">
                     <!-- Authentication Links -->
                     @if (Auth::guest())
-                        <li><a href="{{ url('/login') }}">Login</a></li>
-                        <li><a href="{{ url('/cadastro') }}">Cadastre-se</a></li>
+                        <li><a href="{{ url('/login') }}"><span class="glyphicon glyphicon-user"></span> Login </a></li>
+
+                        <li><a href="{{ url('/cadastro') }}"><span class="glyphicon glyphicon-log-in"></span> Cadastre-se </a></li>
                     @else
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -72,7 +78,7 @@
                     @endif
                 </ul>
             </div>
-        </div>
+            </div>
     </nav>
 
     @yield('conteudo')
