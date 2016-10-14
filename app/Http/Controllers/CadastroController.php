@@ -14,6 +14,8 @@ class CadastroController extends Controller{
 			'nomeUsuario' => $request->input('nomeUsuario'),
 			'emailUsuario' => $request->input('emailUsuario'),
 			'senhaUsuario' => bcrypt($request->input('senhaUsuario')),
+			'nomeCompletoUsuario' => $request->input('nomeCompletoUsuario'),
+			'sexo' => $request->input('sexo')
 		]);
 		return redirect('/login');
 	}
