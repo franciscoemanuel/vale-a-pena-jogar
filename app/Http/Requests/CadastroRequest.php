@@ -29,7 +29,8 @@ class CadastroRequest extends FormRequest
             'senhaUsuario' => 'required|min:6|max:14|confirmed',
             'senhaUsuario_confirmation' => 'required',
             'nomeCompletoUsuario' => 'required|max:120',
-            'sexo' => 'required'
+            'sexo' => 'required',
+            'dataNascimentoUsuario' => 'required|date_format:d/m/Y'
         ];
     }
 
@@ -42,7 +43,8 @@ class CadastroRequest extends FormRequest
             'senhaUsuario.max' => 'A senha deve ter entre 6 a 14 caracteres',
             'emailUsuario.unique' => 'Este e-mail já se encontra em nossa base de dados',
             'nomeUsuario.unique' => 'Este nome de usuário já está sendo usado',
-            'max' => 'o campo :attribute atingiu o máximo de caracteres' 
+            'max' => 'o campo :attribute atingiu o máximo de caracteres',
+            'dataNascimentoUsuario.date_format' => 'Insira uma data válida no formato: dd/mm/yyyy'  
         ];
     }
 }

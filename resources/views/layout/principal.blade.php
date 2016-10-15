@@ -9,15 +9,18 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- Styles -->
-    <link href="/css/app.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="css/stylesheet.css">
-    <link rel="stylesheet" type="text/css" href="font-awesome-4.6.3/css/font-awesome.min.css">
+    <link href="{{asset('css/app.css')}}" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{{asset('css/stylesheet.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('font-awesome-4.6.3/css/font-awesome.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('js/jquery-ui/jquery-ui.css')}}"/>
     <!-- Scripts -->
     <script>
         window.Laravel = <?php echo json_encode([
             'csrfToken' => csrf_token(),
         ]); ?>
     </script>
+   <script src="{{asset('js/app.js')}}"></script>
+   <script src="{{asset('js/jquery-ui/jquery-ui.js')}}"></script>
 </head>
 <body>
     <nav class="navbar navbar-default navbar-static-top">
@@ -84,6 +87,7 @@
     @yield('conteudo')
 
     <!-- Scripts -->
-    <script src="/js/app.js"></script>
+    
+
 </body>
 </html>

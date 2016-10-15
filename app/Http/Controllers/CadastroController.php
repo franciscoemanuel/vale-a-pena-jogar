@@ -10,12 +10,15 @@ class CadastroController extends Controller{
 	}
 
 	public function cadastro(CadastroRequest $request){
+	$dataOriginal=$request->input('dataNascimentoUsuario'); 
+	$dataMySql = \DateTime::createFromFormat('d/m/Y',$dataOriginal);
 	$usuario =	User::Create([
 			'nomeUsuario' => $request->input('nomeUsuario'),
 			'emailUsuario' => $request->input('emailUsuario'),
 			'senhaUsuario' => bcrypt($request->input('senhaUsuario')),
 			'nomeCompletoUsuario' => $request->input('nomeCompletoUsuario'),
-			'sexo' => $request->input('sexo')
+			'sexo' => $request->input('sexo'),
+			'dataNascimentoUsuario' => $dataMySql->format('Y-m-d')
 		]);
 		return redirect('/login');
 	}

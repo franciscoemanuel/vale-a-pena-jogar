@@ -9,7 +9,7 @@ class User extends Authenticatable
 {
     use Notifiable;
 
-    protected $fillable = array('nomeUsuario','senhaUsuario','emailUsuario','sexo','nomeCompletoUsuario');
+    protected $fillable = array('nomeUsuario','senhaUsuario','emailUsuario','sexo','nomeCompletoUsuario','dataNascimentoUsuario');
   
     protected $table = "usuarios";
     protected $primaryKey = "idUsuario";
