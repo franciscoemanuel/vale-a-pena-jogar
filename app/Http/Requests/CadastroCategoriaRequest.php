@@ -1,10 +1,9 @@
-<?php
-
-namespace vapj\Http\Requests\distribuidora;
+<?php  
+namespace vapj\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CadastroRequest extends FormRequest
+class CadastroCategoriaRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +23,7 @@ class CadastroRequest extends FormRequest
     public function rules()
     {
         return [
-            'nomeDistribuidora' => 'required|max:120|unique:distribuidoras,nomeDistribuidora'
+            'nomeCategoria' => 'required|max:120|unique:categorias,nomeCategoria'
         ];
     }
 
@@ -32,7 +31,8 @@ class CadastroRequest extends FormRequest
         return [
             'required' => 'O campo :attribute é obrigatório',
             'max' => 'O número máximo de caracteres para o campo :attribute foi excedido',
-            'nomeDistribuidora.unique' => 'Esta distribuidora já foi cadastrada'
+            'nomeCategoria.unique' => 'Este desenvolvedor já foi cadastrado'
         ];
     }
 }
+?>

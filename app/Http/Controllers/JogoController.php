@@ -1,28 +1,28 @@
 <?php
 
-namespace vapj\Http\Controllers\jogo;
+namespace vapj\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use vapj\Http\Requests;
-use vapj\Http\Controllers\Controller;
 use vapj\Jogo;
 use vapj\Distribuidora;
 use vapj\Desenvolvedor;
-use vapj\Http\Requests\jogo\CadastroRequest;
+use vapj\Http\Requests\CadastroJogoRequest;
 use vapj\Categoria;
-class CadastroController extends Controller
+class JogoController extends Controller
 {
 
-	//retorna a view de cadastro
-	public function form(){
+	//Mostra a view de cadastro de jogos 
+	public function formCadastro(){
 		$categorias = Categoria::all();
 		$desenvolvedores = Desenvolvedor::all();
 		$distribuidoras = Distribuidora::all();
 		return view('jogo.cadastro')->withCategorias($categorias)->withDesenvolvedores($desenvolvedores)->withDistribuidoras($distribuidoras);
 	}
 
-	public function cadastro(CadastroRequest $request){
-		//cadastra o jogo com os parâmetros da requisição
+	//Cadastra o jogo com os parâmetros da requisição validados
+	public function cadastro(CadastroJogoRequest $request){
+		
 		$jogo = Jogo::Create([
 				'nomeJogo' => $request->input('nomeJogo'),
 				'dataLancamento' => $request->input('dataLancamento'),

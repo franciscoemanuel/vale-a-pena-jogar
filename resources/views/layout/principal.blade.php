@@ -18,8 +18,6 @@
         ]); ?>
     </script>
    <script src="{{asset('js/app.js')}}"></script>
-   <script src="{{asset('js/jquery-ui/jquery-ui.js')}}"></script>
-   <script src="{{asset('js/typeahead.bundle.js')}}"></script>
 </head>
 <body>
     <nav class="navbar navbar-default navbar-static-top">

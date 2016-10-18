@@ -1,7 +1,8 @@
 @extends('layout.principal')
 
 @section('conteudo')
-	
+    <script src="{{asset('js/jquery-ui.min.js')}}"></script>
+    <link rel="stylesheet" type="text/css" href="{{asset('css/jquery-ui.min.css')}}">
  	<script>
 		$(function() {
 			$("#dataNascimentoUsuario").datepicker({

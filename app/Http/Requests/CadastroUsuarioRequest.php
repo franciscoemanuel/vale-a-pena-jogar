@@ -1,10 +1,10 @@
 <?php
 
-namespace vapj\Http\Requests\usuario;
+namespace vapj\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CadastroRequest extends FormRequest
+class CadastroUsuarioRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

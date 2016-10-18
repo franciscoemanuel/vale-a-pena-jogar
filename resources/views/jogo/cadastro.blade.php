@@ -1,7 +1,8 @@
 @extends('layout.principal')
 
 @section('conteudo')
-<link rel="stylesheet" type="text/css" href="{{asset('js/jquery-ui/jquery-ui.css')}}"/>
+<script src="{{asset('js/jquery-ui.min.js')}}"></script>
+<link rel="stylesheet" type="text/css" href="{{asset('css/jquery-ui.min.css')}}">	
 <link rel="stylesheet" type="text/css" href="{{asset('css/stylesheet.css')}}">
 <link rel="stylesheet" type="text/css" href="{{asset('css/select2.min.css')}}"/>
 <script src="{{asset('js/select2.min.js')}}"></script>
@@ -23,9 +24,10 @@
 		$(".select2-multi").select2();
 
 		$(".select2-single").select2({
-			placeholder: "Selecione um valor"
+			placeholder: "Selecione um item da lista"
 		});
 
+		$('tooltip').tooltip();
 	});
 </script>
 <div class="container">
@@ -84,8 +86,8 @@
 		</div>
 			<div class="form-group{{ $errors->has('categorias') ? ' has-error' : '' }}">
 			<label for="categorias" class="control-label">Categorias</label>
-			<a target="_blank" href="/cadastro/categorias"><i class="fa fa-plus-circle"></i></a>
-			<select class="form-control select2-multi" name="categorias[]" multiple="multiple">
+			<a title="Nova categoria" target="_blank" href="/cadastro/categorias"><i class="fa fa-plus-circle"></i></a>
+			<select class="form-control select2-multi" name="categorias[]" multiple="multiple" required>
 				@foreach($categorias as $categoria)
 					<option value='{{$categoria->idCategoria}}'>{{$categoria->nomeCategoria}}</option>
 				@endforeach
@@ -98,8 +100,9 @@
 		</div>
 		<div class="form-group{{ $errors->has('distribuidora') ? ' has-error' : '' }}">
 			<label for="distribuidora" class="control-label">Distribuidora do jogo</label>
-			<a target="_blank" href="/cadastro/distribuidoras"><i class="fa fa-plus-circle"></i></a>
-			<select class="form-control select2-single" name="distribuidora">
+			<a title="Nova distribuidora" target="_blank" href="/cadastro/distribuidoras"><i class="fa fa-plus-circle"></i></a>
+			<select class="form-control select2-single" name="distribuidora" required>
+				<option></option>
 				@foreach($distribuidoras as $distribuidora)
 					<option value='{{$distribuidora->idDistribuidora}}'>{{$distribuidora->nomeDistribuidora}}</option>
 				@endforeach
@@ -113,9 +116,9 @@
 
 		<div class="form-group{{ $errors->has('desenvolvedor') ? ' has-error' : '' }}">
 			<label for="desenvolvedor" class="control-label">Desenvolvedor</label>
-			<a target="_blank" href="/cadastro/desenvolvedores"><i class="fa fa-plus-circle"></i></a>
-			<select class="form-control select2-single" name="desenvolvedor">
-				@i
+			<a title="Novo desenvolvedor" target="_blank" href="/cadastro/desenvolvedores"><i class="fa fa-plus-circle"></i></a>
+			<select class="form-control select2-single" name="desenvolvedor" required>
+				<option></option>
 				@foreach($desenvolvedores as $desenvolvedor)
 					<option value='{{$desenvolvedor->idDesenvolvedor}}'>{{$desenvolvedor->nomeDesenvolvedor}}</option>
 				@endforeach

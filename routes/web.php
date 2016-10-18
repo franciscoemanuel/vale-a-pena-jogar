@@ -2,32 +2,32 @@
 
 Route::get('/', 'IndexController@index');
 
-Route::get('/cadastro', 'usuario\CadastroController@form');
+Route::get('/cadastro', 'UsuarioController@formCadastro');
 
-Route::post('/cadastro','usuario\CadastroController@cadastro');
+Route::post('/cadastro','UsuarioController@cadastro');
 
 
-Route::get('/login', 'usuario\LoginController@form');
+Route::get('/login', 'UsuarioController@formLogin');
 
-Route::post('/login', 'usuario\LoginController@login');
+Route::post('/login', 'UsuarioController@login');
 
-Route::post('/logout', 'usuario\LoginController@logout');
+Route::post('/logout', 'UsuarioController@logout');
 
-Route::get('/cadastro/jogos', 'jogo\CadastroController@form');
+Route::get('/cadastro/jogos', 'JogoController@formCadastro');
 
-Route::post('/cadastro/jogos', 'jogo\CadastroController@cadastro');
+Route::post('/cadastro/jogos', 'JogoController@cadastro');
 
-Route::get('/cadastro/desenvolvedores', 'desenvolvedor\CadastroController@form');
+Route::get('/cadastro/desenvolvedores', 'DesenvolvedorController@formCadastro');
 
-Route::post('/cadastro/desenvolvedores', 'desenvolvedor\CadastroController@cadastro');
+Route::post('/cadastro/desenvolvedores', 'DesenvolvedorController@cadastro');
 
-Route::get('/cadastro/distribuidoras', 'distribuidora\CadastroController@form');
+Route::get('/cadastro/distribuidoras', 'DistribuidoraController@formCadastro');
 
-Route::post('/cadastro/distribuidoras', 'distribuidora\CadastroController@cadastro');
+Route::post('/cadastro/distribuidoras', 'DistribuidoraController@cadastro');
 
-Route::get('/cadastro/categorias', 'categoria\CadastroController@form');
+Route::get('/cadastro/categorias', 'CategoriaController@formCadastro');
 
-Route::post('/cadastro/categorias', 'categoria\CadastroController@cadastro');
+Route::post('/cadastro/categorias', 'CategoriaController@cadastro');
 
 Route::get('/distribuidora/{nomeDistribuidora}', function($nomeDistribuidora){
 	$distribuidora = \vapj\Distribuidora::where('nomeDistribuidora', $nomeDistribuidora)->firstOrFail();

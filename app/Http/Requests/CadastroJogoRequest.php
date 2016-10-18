@@ -1,10 +1,10 @@
 <?php
 
-namespace vapj\Http\Requests\jogo;
+namespace vapj\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CadastroRequest extends FormRequest
+class CadastroJogoRequest extends FormRequest
 {
     public function authorize()
     {
