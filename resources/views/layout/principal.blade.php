@@ -10,9 +10,7 @@
 
     <!-- Styles -->
     <link href="{{asset('css/app.css')}}" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="{{asset('css/stylesheet.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('font-awesome-4.6.3/css/font-awesome.min.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{asset('js/jquery-ui/jquery-ui.css')}}"/>
     <!-- Scripts -->
     <script>
         window.Laravel = <?php echo json_encode([
@@ -21,6 +19,7 @@
     </script>
    <script src="{{asset('js/app.js')}}"></script>
    <script src="{{asset('js/jquery-ui/jquery-ui.js')}}"></script>
+   <script src="{{asset('js/typeahead.bundle.js')}}"></script>
 </head>
 <body>
     <nav class="navbar navbar-default navbar-static-top">

@@ -1,6 +1,6 @@
 <?php
 
-namespace vapj\Http\Requests;
+namespace vapj\Http\Requests\usuario;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -44,7 +44,7 @@ class CadastroRequest extends FormRequest
             'emailUsuario.unique' => 'Este e-mail já se encontra em nossa base de dados',
             'nomeUsuario.unique' => 'Este nome de usuário já está sendo usado',
             'max' => 'o campo :attribute atingiu o máximo de caracteres',
-            'dataNascimentoUsuario.date_format' => 'Insira uma data válida no formato: dd/mm/yyyy'  
+            'dataNascimentoUsuario.date_format' => 'Insira uma data válida no formato: dd/mm/aaaa'  
         ];
     }
 }

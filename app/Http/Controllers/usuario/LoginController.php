@@ -1,11 +1,11 @@
 <?php
-namespace vapj\Http\Controllers;
+namespace vapj\Http\Controllers\usuario;
 
 use Illuminate\Http\Request;
 use vapj\Http\Requests;
 use Auth;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
-
+use vapj\Http\Controllers\Controller;
 class LoginController extends Controller
 {
 
