@@ -31,7 +31,7 @@ class CadastroCategoriaRequest extends FormRequest
         return [
             'required' => 'O campo :attribute é obrigatório',
             'max' => 'O número máximo de caracteres para o campo :attribute foi excedido',
-            'nomeCategoria.unique' => 'Este desenvolvedor já foi cadastrado'
+            'nomeCategoria.unique' => 'Esta categoria já foi cadastrada'
         ];
     }
 }

@@ -1,35 +1,12 @@
 @extends('layout.principal')
 
-@section('conteudo')
-<script src="{{asset('js/jquery-ui.min.js')}}"></script>
+@section('styles')
 <link rel="stylesheet" type="text/css" href="{{asset('css/jquery-ui.min.css')}}">	
 <link rel="stylesheet" type="text/css" href="{{asset('css/stylesheet.css')}}">
 <link rel="stylesheet" type="text/css" href="{{asset('css/select2.min.css')}}"/>
-<script src="{{asset('js/select2.min.js')}}"></script>
-<script>
-	$(function() {
-		$("#dataLancamento").datepicker({
-			dateFormat: 'dd/mm/yy',
-			changeYear: true,
-			changeMonth: true,
-			yearRange: "-100:+0",
-			dayNames: ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado','Domingo'],
-			dayNamesMin: ['D','S','T','Q','Q','S','S','D'],
-			dayNamesShort: ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb','Dom'],
-			monthNames: ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'],
-			monthNamesShort: ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez']
-		});
+@stop
 
-		
-		$(".select2-multi").select2();
-
-		$(".select2-single").select2({
-			placeholder: "Selecione um item da lista"
-		});
-
-		$('tooltip').tooltip();
-	});
-</script>
+@section('conteudo')
 <div class="container">
 	@if (!empty($errors->all()))
 	<div class="alert alert-danger">
@@ -84,13 +61,11 @@
 			</span>
 			@endif
 		</div>
-			<div class="form-group{{ $errors->has('categorias') ? ' has-error' : '' }}">
+		<div class="form-group{{ $errors->has('categorias') ? ' has-error' : '' }}">
 			<label for="categorias" class="control-label">Categorias</label>
 			<a title="Nova categoria" target="_blank" href="/cadastro/categorias"><i class="fa fa-plus-circle"></i></a>
-			<select class="form-control select2-multi" name="categorias[]" multiple="multiple" required>
-				@foreach($categorias as $categoria)
-					<option value='{{$categoria->idCategoria}}'>{{$categoria->nomeCategoria}}</option>
-				@endforeach
+			<select class="form-control select2CategoriaAjax" name="categorias[]" multiple="multiple" required>
+				<option></option>
 			</select>
 			@if ($errors->has('categorias'))
 			<span class="help-block">
@@ -101,11 +76,8 @@
 		<div class="form-group{{ $errors->has('distribuidora') ? ' has-error' : '' }}">
 			<label for="distribuidora" class="control-label">Distribuidora do jogo</label>
 			<a title="Nova distribuidora" target="_blank" href="/cadastro/distribuidoras"><i class="fa fa-plus-circle"></i></a>
-			<select class="form-control select2-single" name="distribuidora" required>
+			<select class="form-control select2DistribuidoraAjax" name="distribuidora" required>
 				<option></option>
-				@foreach($distribuidoras as $distribuidora)
-					<option value='{{$distribuidora->idDistribuidora}}'>{{$distribuidora->nomeDistribuidora}}</option>
-				@endforeach
 			</select>
 			@if ($errors->has('distribuidora'))
 			<span class="help-block">
@@ -117,11 +89,8 @@
 		<div class="form-group{{ $errors->has('desenvolvedor') ? ' has-error' : '' }}">
 			<label for="desenvolvedor" class="control-label">Desenvolvedor</label>
 			<a title="Novo desenvolvedor" target="_blank" href="/cadastro/desenvolvedores"><i class="fa fa-plus-circle"></i></a>
-			<select class="form-control select2-single" name="desenvolvedor" required>
+			<select class="form-control select2DesenvolvedorAjax" name="desenvolvedor" required>
 				<option></option>
-				@foreach($desenvolvedores as $desenvolvedor)
-					<option value='{{$desenvolvedor->idDesenvolvedor}}'>{{$desenvolvedor->nomeDesenvolvedor}}</option>
-				@endforeach
 			</select>
 			@if ($errors->has('desenvolvedor'))
 			<span class="help-block">
@@ -133,4 +102,12 @@
 		<button class="btn btn-primary" type="submit">Cadastrar</button>
 	</form>
 </div>
+@stop
+
+
+@section('scripts')
+	<script src="{{asset('js/jquery-ui.min.js')}}"></script>
+	<script src="{{asset('js/select2.min.js')}}"></script>
+	<script src="{{asset('js/pt-BR.js')}}"></script>
+	<script src="{{asset('js/cadastroJogos.js')}}"></script>
 @stop

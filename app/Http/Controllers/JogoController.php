@@ -14,10 +14,7 @@ class JogoController extends Controller
 
 	//Mostra a view de cadastro de jogos 
 	public function formCadastro(){
-		$categorias = Categoria::all();
-		$desenvolvedores = Desenvolvedor::all();
-		$distribuidoras = Distribuidora::all();
-		return view('jogo.cadastro')->withCategorias($categorias)->withDesenvolvedores($desenvolvedores)->withDistribuidoras($distribuidoras);
+		return view('jogo.cadastro');
 	}
 
 	//Cadastra o jogo com os parâmetros da requisição validados

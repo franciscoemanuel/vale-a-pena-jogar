@@ -21,4 +21,14 @@ class DesenvolvedorController extends Controller
     		]);
     	return redirect('/cadastro/desenvolvedores');
     }
+
+    public function buscaDesenvolvedoresJson(Request $request){
+        $query = $request->input('q');
+        $desenvolvedores = Desenvolvedor::where('nomeDesenvolvedor','LIKE',"%$query%")->get(['idDesenvolvedor','nomeDesenvolvedor']);
+        $json = [];
+        foreach ($desenvolvedores as $desenvolvedor) {
+            $json[] = array('id' => $desenvolvedor->idDesenvolvedor, 'text' => $desenvolvedor->nomeDesenvolvedor);
+        }
+        return response()->json($json);
+    }
 }

@@ -1,23 +1,9 @@
 @extends('layout.principal')
 
+@section('styles')
+	<link rel="stylesheet" type="text/css" href="{{asset('css/jquery-ui.min.css')}}">
+@stop
 @section('conteudo')
-    <script src="{{asset('js/jquery-ui.min.js')}}"></script>
-    <link rel="stylesheet" type="text/css" href="{{asset('css/jquery-ui.min.css')}}">
- 	<script>
-		$(function() {
-			$("#dataNascimentoUsuario").datepicker({
-	        dateFormat: 'dd/mm/yy',
-	        changeYear: true,
-	        changeMonth: true,
-	        yearRange: "-100:+0",
-	        dayNames: ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado','Domingo'],
-	        dayNamesMin: ['D','S','T','Q','Q','S','S','D'],
-	        dayNamesShort: ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb','Dom'],
-	        monthNames: ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'],
-	        monthNamesShort: ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez']
-	    });
-		});
-	</script>
 	<div class="container">
 		@if (!empty($errors->all()))
 			<div class="alert alert-danger">
@@ -112,4 +98,24 @@
 
 		</form>
 	</div>
+@stop
+
+
+@section('scripts')
+	    <script src="{{asset('js/jquery-ui.min.js')}}"></script>
+	    <script>
+			$(function() {
+				$("#dataNascimentoUsuario").datepicker({
+		        dateFormat: 'dd/mm/yy',
+		        changeYear: true,
+		        changeMonth: true,
+		        yearRange: "-100:+0",
+		        dayNames: ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado','Domingo'],
+		        dayNamesMin: ['D','S','T','Q','Q','S','S','D'],
+		        dayNamesShort: ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb','Dom'],
+		        monthNames: ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'],
+		        monthNamesShort: ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez']
+		    });
+			});
+		</script>
 @stop

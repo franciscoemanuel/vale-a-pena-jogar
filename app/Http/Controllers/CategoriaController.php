@@ -21,6 +21,16 @@ class CategoriaController extends Controller
     		]);
     	return redirect('/cadastro/categorias');
     }
+
+    public function buscaCategoriasJson(Request $request){
+        $query = $request->input('q');
+        $categorias = Categoria::where('nomeCategoria','LIKE',"%$query%")->get(['idCategoria','nomeCategoria']);
+        $json = [];
+        foreach ($categorias as $categoria) {
+            $json[] = array('id' => $categoria->idCategoria, 'text' => $categoria->nomeCategoria);
+        }
+        return response()->json($json);
+    }
 }
 
 ?>

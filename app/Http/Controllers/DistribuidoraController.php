@@ -20,4 +20,14 @@ class DistribuidoraController extends Controller
     		]); 
     	return redirect('/cadastro/distribuidoras');
     }
+
+    public function buscaDistribuidorasJson(Request $request){
+        $query = $request->input('q');
+        $distribuidoras = Distribuidora::where('nomeDistribuidora','LIKE',"%$query%")->get(['idDistribuidora','nomeDistribuidora']);
+        $json = [];
+        foreach ($distribuidoras as $distribuidora) {
+            $json[] = array('id' => $distribuidora->idDistribuidora, 'text' => $distribuidora->nomeDistribuidora);
+        }
+        return response()->json($json);
+    }
 }

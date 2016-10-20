@@ -29,6 +29,12 @@ Route::get('/cadastro/categorias', 'CategoriaController@formCadastro');
 
 Route::post('/cadastro/categorias', 'CategoriaController@cadastro');
 
+Route::get('/autocomplete/desenvolvedores', 'DesenvolvedorController@buscaDesenvolvedoresJson');
+
+Route::get('/autocomplete/distribuidoras', 'DistribuidoraController@buscaDistribuidorasJson');
+
+Route::get('/autocomplete/categorias', 'CategoriaController@buscaCategoriasJson');
+
 Route::get('/distribuidora/{nomeDistribuidora}', function($nomeDistribuidora){
 	$distribuidora = \vapj\Distribuidora::where('nomeDistribuidora', $nomeDistribuidora)->firstOrFail();
 	dd($distribuidora->jogos);
