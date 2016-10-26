@@ -12,14 +12,19 @@ use vapj\Categoria;
 class JogoController extends Controller
 {
 
-	//Mostra a view de cadastro de jogos 
-	public function formCadastro(){
+	//Mostra página com todos os jogos
+	public function index(){
+		$jogos = Jogo::paginate(21);
+		return view ('jogo.index')->withJogos($jogos);
+	}
+
+	//Mostra a form de cadastro de jogos 
+	public function create(){
 		return view('jogo.cadastro');
 	}
 
 	//Cadastra o jogo com os parâmetros da requisição validados
-	public function cadastro(CadastroJogoRequest $request){
-		
+	public function store(CadastroJogoRequest $request){
 		$jogo = Jogo::Create([
 				'nomeJogo' => $request->input('nomeJogo'),
 				'dataLancamento' => $request->input('dataLancamento'),
@@ -32,6 +37,29 @@ class JogoController extends Controller
 		//cadastra as categorias na tabela pivô
 		$jogo->categorias()->sync($request->categorias, false);
 
-		return redirect('/cadastro/jogos');
+		return redirect('/jogos/cadastro');
 	}
+
+	//Mostra página do jogo especificado no parâmetro da função
+	public function show($nomeJogo){
+		$jogo = \vapj\Jogo::where('nomeJogo', $nomeJogo)->firstOrFail();
+		return view('jogo.jogo')->withJogo($jogo);
+	}
+
+	//Mostra página de edição do jogo
+	public function edit(){
+		//
+	}
+
+	//Edita o jogo especificado no parâmetro do método
+	public function update(Request $request, $id){
+		//
+	}
+
+	//Deleta o jogo especificado no parâmetro do método
+	public function destroy($id){
+		//
+	}
+
+
 }

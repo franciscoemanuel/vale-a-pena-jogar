@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Vale a pena Jogar</title>
+    <title>VAPJ @yield('titulo')</title>
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -85,10 +85,10 @@
 <div class="container">
     @yield('conteudo') 
     <!--Footer-->
-    <div>
-        <hr>
-        <p class="text-center">Vale a pena jogar © 2016. Todos os direitos reservados.</p>
-    </div>
+</div>
+<div>
+    <hr>
+    <p class="text-center">Vale a pena jogar © 2016. Todos os direitos reservados.</p>
 </div>
 <!-- Scripts -->
 @yield('scripts')

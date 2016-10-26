@@ -15,7 +15,7 @@ class CadastroJogoRequest extends FormRequest
     public function rules()
     {
         return [
-              'nomeJogo' => 'required',
+              'nomeJogo' => 'required|unique:jogos,nomeJogo',
               'dataLancamento' => 'required|date_format:d/m/Y',
               'descricao' => 'required',
               'quantidadeJogadores' => 'required',
@@ -29,6 +29,7 @@ class CadastroJogoRequest extends FormRequest
         return [
             'required' => 'o campo :attribute é obrigatório',
             'dataLancamento.date_format' => 'Insira uma data válida no formato: dd/mm/aaaa',
+            'nomeJogo.unique' => 'Este jogo já foi cadastrado'
         ];
     }
 }
