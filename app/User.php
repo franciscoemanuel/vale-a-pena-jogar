@@ -42,4 +42,12 @@ class User extends Authenticatable
     {
         $this->attributes['dataNascimentoUsuario'] = \Carbon\Carbon::createFromFormat('d/m/Y', $value);
     }
+
+    public function jogos(){
+        return $this->belongsToMany('vapj\Jogo', 'usuario_jogo', 'idUsuario', 'idJogo');
+    }
+
+    public function possuiJogo($idJogo){
+        return $this->jogos()->where('usuario_jogo.idJogo', $idJogo)->first();
+    }
 }

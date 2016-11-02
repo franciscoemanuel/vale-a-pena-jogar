@@ -9,16 +9,30 @@ use vapj\Http\Requests\CadastroDistribuidoraRequest;
 class DistribuidoraController extends Controller
 {
 	//Mostra a view de cadastro de distribuidoras
-    public function formCadastro(){
+    public function create(){
     	return view('distribuidora.cadastro');
     }
 
     //Cadastra distribuidora com os parâmetros da requisição validados
-    public function cadastro(CadastroDistribuidoraRequest $request){
+    public function store(CadastroDistribuidoraRequest $request){
     	$distribuidora = Distribuidora::create([
     			'nomeDistribuidora' => $request->input('nomeDistribuidora')
     		]); 
-    	return redirect('/cadastro/distribuidoras');
+    	return redirect('/distribuidoras/cadastro');
+    }
+
+    public function edit(){
+        //
+    }
+
+    
+    public function update(Request $request, $id){
+        //
+    }
+
+    
+    public function destroy($id){
+        //
     }
 
     public function buscaDistribuidorasJson(Request $request){

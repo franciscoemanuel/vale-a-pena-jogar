@@ -10,16 +10,30 @@ class DesenvolvedorController extends Controller
 {
 
 	//Mostra a view de cadastro de desenvolvedores
-    public function formCadastro(){
+    public function create(){
     	return view('desenvolvedor.cadastro');
     }
 
     //Cadastra desenvolvedor com os parâmetros da requisição validados
-    public function cadastro(CadastroDesenvolvedorRequest $request){
+    public function store(CadastroDesenvolvedorRequest $request){
     	$desenvolvedor = Desenvolvedor::create([
     		'nomeDesenvolvedor' => $request->input('nomeDesenvolvedor')
     		]);
-    	return redirect('/cadastro/desenvolvedores');
+    	return redirect('/desenvolvedores/cadastro');
+    }
+
+    public function edit(){
+        //
+    }
+
+    
+    public function update(Request $request, $id){
+        //
+    }
+
+    
+    public function destroy($id){
+        //
     }
 
     public function buscaDesenvolvedoresJson(Request $request){

@@ -10,16 +10,30 @@ class CategoriaController extends Controller
 {
 
 	//Mostra a view de cadastro de categorias
-    public function formCadastro(){
+    public function create(){
     	return view('categoria.cadastro');
     }
     
     //Cadastra categoria com os parâmetros da requisição validados
-    public function cadastro(CadastroCategoriaRequest $request){
+    public function store(CadastroCategoriaRequest $request){
     	$categoria = Categoria::create([
     		'nomeCategoria' => $request->input('nomeCategoria')
     		]);
-    	return redirect('/cadastro/categorias');
+    	return redirect('/categorias/cadastro');
+    }
+
+    public function edit(){
+        //
+    }
+
+   
+    public function update(Request $request, $id){
+        //
+    }
+
+    
+    public function destroy($id){
+        //
     }
 
     public function buscaCategoriasJson(Request $request){

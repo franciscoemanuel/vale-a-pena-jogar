@@ -9,7 +9,7 @@
 			<strong>Erro ao realizar cadastro.</strong>
 		</div>
 		@endif
-		<form action="/cadastro/categorias" method="POST">
+		<form action={{url('/categorias/cadastro')}} method="POST">
 			<input type="hidden" name="_token" value="{{csrf_token()}}" />
 			<div class="form-group{{ $errors->has('nomeCategoria') ? ' has-error' : '' }}">
 					<label for="nomeCategoria" class="control-label">Nome da categoria*</label>

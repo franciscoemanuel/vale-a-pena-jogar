@@ -11,7 +11,7 @@
 				<strong>Erro ao realizar cadastro.</strong>
 			</div>
 		@endif
-		<form action="/cadastro" method="post">
+		<form action={{url('/cadastro')}} method="post">
 			<input type="hidden" name="_token" value="{{csrf_token()}}" />
 			
 			<div class="form-group{{ $errors->has('nomeCompletoUsuario') ? ' has-error' : '' }}">

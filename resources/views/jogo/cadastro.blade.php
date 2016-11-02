@@ -63,7 +63,7 @@
 		</div>
 		<div class="form-group{{ $errors->has('categorias') ? ' has-error' : '' }}">
 			<label for="categorias" class="control-label">Categorias</label>
-			<a title="Nova categoria" target="_blank" href="/cadastro/categorias"><i class="fa fa-plus-circle"></i></a>
+			<a title="Nova categoria" target="_blank" href={{url('/categorias/cadastro')}}><i class="fa fa-plus-circle"></i></a>
 			<select class="form-control select2CategoriaAjax" name="categorias[]" multiple="multiple" required>
 				<option></option>
 			</select>
@@ -75,7 +75,7 @@
 		</div>
 		<div class="form-group{{ $errors->has('distribuidora') ? ' has-error' : '' }}">
 			<label for="distribuidora" class="control-label">Distribuidora do jogo</label>
-			<a title="Nova distribuidora" target="_blank" href="/cadastro/distribuidoras"><i class="fa fa-plus-circle"></i></a>
+			<a title="Nova distribuidora" target="_blank" href={{url('/distribuidoras/cadastro')}}><i class="fa fa-plus-circle"></i></a>
 			<select class="form-control select2DistribuidoraAjax" name="distribuidora" required>
 				<option></option>
 			</select>
@@ -88,7 +88,7 @@
 
 		<div class="form-group{{ $errors->has('desenvolvedor') ? ' has-error' : '' }}">
 			<label for="desenvolvedor" class="control-label">Desenvolvedor</label>
-			<a title="Novo desenvolvedor" target="_blank" href="/cadastro/desenvolvedores"><i class="fa fa-plus-circle"></i></a>
+			<a title="Novo desenvolvedor" target="_blank" href={{url('/desenvolvedores/cadastro')}}><i class="fa fa-plus-circle"></i></a>
 			<select class="form-control select2DesenvolvedorAjax" name="desenvolvedor" required>
 				<option></option>
 			</select>

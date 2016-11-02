@@ -11,4 +11,8 @@ class Categoria extends Model
     protected $primaryKey = "idCategoria";
 
     public $timestamps = false;
+
+    public function jogos(){
+    	return $this->belongsToMany('vapj\Jogo', 'categoria_jogo', 'idCategoria', 'idJogo');
+    }
 }

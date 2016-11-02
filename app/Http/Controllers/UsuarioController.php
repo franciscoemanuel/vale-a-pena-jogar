@@ -13,12 +13,12 @@ class UsuarioController extends Controller{
     use AuthenticatesUsers;
 
     //Mostra a view de cadastro de usuários
-    public function formCadastro(){
+    public function create(){
         return view("usuario.cadastro");
     }
 
     //Cadastra o jogo com os parâmetros da requisição validados
-    public function cadastro(CadastroUsuarioRequest $request){
+    public function store(CadastroUsuarioRequest $request){
         $usuario =	User::Create([
             'nomeUsuario' => $request->input('nomeUsuario'),
             'emailUsuario' => $request->input('emailUsuario'),
@@ -43,8 +43,19 @@ class UsuarioController extends Controller{
         ];
         if($this->guard()->attempt($credenciais, $request->has('remember'))){
             return $this->sendLoginResponse($request);
-        }else
+        }
         return $this->sendFailedLoginResponse($request);
+    }
+
+    //Adiciona jogos confirmados como jogados a tabela pivô
+    public function joguei(Request $request){
+        $usuario = Auth::user(); 
+        if ($request->jaJogou == "true"){
+            $usuario->jogos()->detach($request->idJogo);
+            return response()->json(['msg' => 'Jogo deletado da biblioteca com sucesso!']);
+        }
+        $usuario->jogos()->attach([$request->idJogo]);
+        return response()->json(['msg' => 'Jogo adicionado biblioteca com sucesso!']);
     }
 
     //Página de redirecionamento após sucesso da autenticação.
@@ -54,7 +65,7 @@ class UsuarioController extends Controller{
     public function __construct()
     {   
         //Middleware que redireciona para a home caso o usuário esteja logado
-        $this->middleware('guest', ['except' => 'logout']);
+        $this->middleware('guest', ['except' => ['logout', 'joguei']]);
     }
 }
 

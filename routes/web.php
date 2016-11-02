@@ -2,9 +2,11 @@
 
 Route::get('/', 'IndexController@index');
 
-Route::get('/cadastro', 'UsuarioController@formCadastro');
+/*Rotas declaradas para o controller de usuários*/
 
-Route::post('/cadastro','UsuarioController@cadastro');
+Route::get('/cadastro', 'UsuarioController@create');
+
+Route::post('/cadastro','UsuarioController@store');
 
 Route::get('/login', 'UsuarioController@formLogin');
 
@@ -12,24 +14,7 @@ Route::post('/login', 'UsuarioController@login');
 
 Route::post('/logout', 'UsuarioController@logout');
 
-Route::get('/cadastro/desenvolvedores', 'DesenvolvedorController@formCadastro');
-
-Route::post('/cadastro/desenvolvedores', 'DesenvolvedorController@cadastro');
-
-Route::get('/cadastro/distribuidoras', 'DistribuidoraController@formCadastro');
-
-Route::post('/cadastro/distribuidoras', 'DistribuidoraController@cadastro');
-
-Route::get('/cadastro/categorias', 'CategoriaController@formCadastro');
-
-Route::post('/cadastro/categorias', 'CategoriaController@cadastro');
-
-Route::get('/autocomplete/desenvolvedores', 'DesenvolvedorController@buscaDesenvolvedoresJson');
-
-Route::get('/autocomplete/distribuidoras', 'DistribuidoraController@buscaDistribuidorasJson');
-
-Route::get('/autocomplete/categorias', 'CategoriaController@buscaCategoriasJson');
-
+Route::post('/joguei', 'UsuarioController@joguei')->name('joguei');
 
 /*Rotas declaradas para o controller de jogos*/
 
@@ -39,14 +24,28 @@ Route::post('/jogos/cadastro', 'JogoController@store');
 
 Route::get('/jogos', 'JogoController@index');
 
-Route::get('/jogos/{id}', 'JogoController@show');
+Route::get('/jogos/{nomeJogo}', 'JogoController@show');
 
-Route::get('/distribuidora/{nomeDistribuidora}', function($nomeDistribuidora){
-	$distribuidora = \vapj\Distribuidora::where('nomeDistribuidora', $nomeDistribuidora)->firstOrFail();
-	dd($distribuidora->jogos);
-});
+/*Rotas declaradas para o controller de categorias*/
 
-Route::get('/desenvolvedor/{nomeDesenvolvedor}', function($nomeDesenvolvedor){
-	$desenvolvedor = \vapj\desenvolvedor::where('nomeDesenvolvedor', $nomeDesenvolvedor)->firstOrFail();
-	dd($desenvolvedor->jogos);
-});
+Route::get('/autocomplete/categorias', 'CategoriaController@buscaCategoriasJson');
+
+Route::get('/categorias/cadastro', 'CategoriaController@create');
+
+Route::post('/categorias/cadastro', 'CategoriaController@store');
+
+/*Rotas declaradas para o controller de desenvolvedores*/
+
+Route::get('/desenvolvedores/cadastro', 'DesenvolvedorController@create');
+
+Route::post('/desenvolvedores/cadastro', 'DesenvolvedorController@store');
+
+Route::get('/autocomplete/desenvolvedores', 'DesenvolvedorController@buscaDesenvolvedoresJson');
+
+/*Rotas declaradas para o controller de distribuidoras*/
+
+Route::get('/distribuidoras/cadastro', 'DistribuidoraController@create');
+
+Route::post('/distribuidoras/cadastro', 'DistribuidoraController@store');
+
+Route::get('/autocomplete/distribuidoras', 'DistribuidoraController@buscaDistribuidorasJson');
