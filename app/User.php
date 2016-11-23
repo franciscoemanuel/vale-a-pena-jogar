@@ -44,10 +44,16 @@ class User extends Authenticatable
     }
 
     public function jogos(){
-        return $this->belongsToMany('vapj\Jogo', 'usuario_jogo', 'idUsuario', 'idJogo');
+        return $this->belongsToMany('vapj\Jogo', 'usuario_jogo', 'idUsuario', 'idJogo')->withPivot('avaliacao');
     }
 
     public function possuiJogo($idJogo){
-        return $this->jogos()->where('usuario_jogo.idJogo', $idJogo)->first();
+        $jogo = $this->jogos()->where('usuario_jogo.idJogo', $idJogo)->first();
+        return $jogo != null;
+    }
+
+    public function avaliacaoJogo($idJogo){
+        $jogo = $this->jogos()->where('usuario_jogo.idJogo', $idJogo)->first();
+        return $jogo != null ? $jogo->pivot->avaliacao : false;
     }
 }

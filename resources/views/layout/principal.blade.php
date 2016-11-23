@@ -11,6 +11,7 @@
     <!-- Styles -->
     <link href="{{asset('css/app.css')}}" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{{asset('font-awesome-4.6.3/css/font-awesome.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('css/stylesheet.css')}}">
     @yield('styles')
     <!-- Scripts -->
     <script>

@@ -9,6 +9,7 @@ use vapj\Distribuidora;
 use vapj\Desenvolvedor;
 use vapj\Http\Requests\CadastroJogoRequest;
 use vapj\Categoria;
+use JavaScript;
 class JogoController extends Controller
 {
 
@@ -43,7 +44,16 @@ class JogoController extends Controller
 	//Mostra página do jogo especificado no parâmetro da função
 	public function show($nomeJogo){
 		$jogo = \vapj\Jogo::where('nomeJogo', $nomeJogo)->firstOrFail();
-		return view('jogo.jogo')->withJogo($jogo);
+		$avaliacaoMedia = DB::table('usuario_jogo')->where('idJogo',$jogo->idJogo)->avg('avaliacao');
+		$avaliacaoMedia = number_format(floatval($avaliacaoMedia), 1);
+		$avaliacaoUsuario = \Auth::check() ? \Auth::user()->avaliacaoJogo($jogo->idJogo) : 0;
+		$usuarioPossuiJogo = \Auth::check() ? \Auth::user()->possuiJogo($jogo->idJogo) : false;
+		return view('jogo.jogo', array(
+				"jogo" => $jogo,
+				"avaliacaoMedia" => $avaliacaoMedia,
+				"avaliacaoUsuario" => $avaliacaoUsuario,
+				"usuarioPossuiJogo" => $usuarioPossuiJogo
+			));
 	}
 
 	//Mostra página de edição do jogo

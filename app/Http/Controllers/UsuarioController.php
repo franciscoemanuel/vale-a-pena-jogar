@@ -48,14 +48,17 @@ class UsuarioController extends Controller{
     }
 
     //Adiciona jogos confirmados como jogados a tabela pivô
-    public function joguei(Request $request){
-        $usuario = Auth::user(); 
-        if ($request->jaJogou == "true"){
+    public function jogou(Request $request){
+        $usuario = Auth::user();
+        if ($usuario == null)
+            return response()->json(['msg' => 'Usuário não está logado']);
+        if ($request->isJogou == "true"){
             $usuario->jogos()->detach($request->idJogo);
             return response()->json(['msg' => 'Jogo deletado da biblioteca com sucesso!']);
         }
-        $usuario->jogos()->attach([$request->idJogo]);
-        return response()->json(['msg' => 'Jogo adicionado biblioteca com sucesso!']);
+        $usuario->jogos()->sync([$request->idJogo => ['avaliacao'=>$request->avaliacao]]);
+        //$usuario->jogos()->attach([$request->idJogo => ['avaliacao'=>$request->avaliacao] ]);
+        return response()->json(['msg' => 'Jogo adicionado a biblioteca com sucesso!']);
     }
 
     //Página de redirecionamento após sucesso da autenticação.
@@ -65,7 +68,7 @@ class UsuarioController extends Controller{
     public function __construct()
     {   
         //Middleware que redireciona para a home caso o usuário esteja logado
-        $this->middleware('guest', ['except' => ['logout', 'joguei']]);
+        $this->middleware('guest', ['except' => ['logout', 'jogou']]);
     }
 }
 

@@ -14,7 +14,7 @@ Route::post('/login', 'UsuarioController@login');
 
 Route::post('/logout', 'UsuarioController@logout');
 
-Route::post('/joguei', 'UsuarioController@joguei')->name('joguei');
+Route::post('/jogou', 'UsuarioController@jogou')->name('jogou');
 
 /*Rotas declaradas para o controller de jogos*/
 

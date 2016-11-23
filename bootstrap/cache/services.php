@@ -27,6 +27,7 @@
     23 => 'vapj\\Providers\\AuthServiceProvider',
     24 => 'vapj\\Providers\\EventServiceProvider',
     25 => 'vapj\\Providers\\RouteServiceProvider',
+    26 => 'Laracasts\\Utilities\\JavaScript\\JavaScriptServiceProvider',
   ),
   'eager' => 
   array (
@@ -44,6 +45,7 @@
     11 => 'vapj\\Providers\\AuthServiceProvider',
     12 => 'vapj\\Providers\\EventServiceProvider',
     13 => 'vapj\\Providers\\RouteServiceProvider',
+    14 => 'Laracasts\\Utilities\\JavaScript\\JavaScriptServiceProvider',
   ),
   'deferred' => 
   array (
