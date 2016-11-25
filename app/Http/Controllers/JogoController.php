@@ -46,7 +46,7 @@ class JogoController extends Controller
 		$jogo = \vapj\Jogo::where('nomeJogo', $nomeJogo)->firstOrFail();
 		$avaliacaoMedia = DB::table('usuario_jogo')->where('idJogo',$jogo->idJogo)->avg('avaliacao');
 		$avaliacaoMedia = number_format(floatval($avaliacaoMedia), 1);
-		$avaliacaoUsuario = \Auth::check() ? \Auth::user()->avaliacaoJogo($jogo->idJogo) : 0;
+		$avaliacaoUsuario = \Auth::check() ? \Auth::user()->avaliacaoJogo($jogo->idJogo) : "null";
 		$usuarioPossuiJogo = \Auth::check() ? \Auth::user()->possuiJogo($jogo->idJogo) : false;
 		return view('jogo.jogo', array(
 				"jogo" => $jogo,

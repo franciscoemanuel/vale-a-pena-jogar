@@ -50,13 +50,16 @@ class UsuarioController extends Controller{
     //Adiciona jogos confirmados como jogados a tabela pivô
     public function jogou(Request $request){
         $usuario = Auth::user();
+        $isJogou = $request->isJogou;
+        $idJogo = $request->idJogo;
+        $avaliacao = $request->avaliacao != '' ? $request->avaliacao : null;
         if ($usuario == null)
             return response()->json(['msg' => 'Usuário não está logado']);
-        if ($request->isJogou == "true"){
-            $usuario->jogos()->detach($request->idJogo);
+        if ($isJogou == "true"){
+            $usuario->jogos()->detach($idJogo);
             return response()->json(['msg' => 'Jogo deletado da biblioteca com sucesso!']);
         }
-        $usuario->jogos()->sync([$request->idJogo => ['avaliacao'=>$request->avaliacao]]);
+        $usuario->jogos()->sync([$idJogo => ['avaliacao'=>$avaliacao]]);
         //$usuario->jogos()->attach([$request->idJogo => ['avaliacao'=>$request->avaliacao] ]);
         return response()->json(['msg' => 'Jogo adicionado a biblioteca com sucesso!']);
     }

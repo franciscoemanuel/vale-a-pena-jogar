@@ -66,7 +66,7 @@
 @stop
 
 @section('conteudo')
-	<div id="jogo" data-idJogo="{{$jogo->idJogo}}" data-avaliacao="{{$avaliacaoMedia}}">
+	<div id="jogo" data-idJogo="{{$jogo->idJogo}}" data-avaliacao="{{$avaliacaoMedia}}" data-avaliacaoUsuario="{{$avaliacaoUsuario}}">
 		<div class="page-header">		
 			<span class="titulo">{{$jogo->nomeJogo}}</span>
 				<div class="containerBotao">
@@ -100,6 +100,7 @@
 					<span class="notaAvaliacao">
 					<h4 class="bold">Sua avaliação: </h4> 
 						<select id="estrelas">
+						  <option></option>
 						  <option value="1">1</option>
 						  <option value="2">2</option>
 						  <option value="3">3</option>
@@ -127,7 +128,6 @@
 	var url = "{{ route('jogou') }}";
 	function isJogou(){
 		var isJogou = $('.btn').attr('class') === "btn btn-success";
-		console.log(isJogou);
 		return isJogou;
 	}
 	function avaliaJogo(avaliacao, jaAvaliou){
@@ -146,7 +146,8 @@
 				$("#estrelas").prop( "disabled", false );
 			}
 		});
-		atualizaAvaliacao(avaliacao);
+	 	if (!isJogou())
+		 	$('.btn').toggleClass('btn-success btn-default');
 	}
 	function jaJogou(){
 		$.ajax({
@@ -164,57 +165,25 @@
 			}
 		});
 	}
-	function atualizaAvaliacao(avaliacao){
-		if (avaliacao == 0){
-			$('.your-rating')
-			.find('span')
-			.html('Você ainda não avaliou este jogo');
-		}else{
-			 $('.current-rating')
-			 .addClass('hidden');
-			 $('.your-rating')
-			 .find('span')
-			 .html('Sua nota: '+avaliacao);
-			 $('.clear-rating')
-			 .removeClass('hidden');
-			 if (!isJogou())
-			 	$('.btn').toggleClass('btn-success btn-default');
-		}
-	}
 		$(function() {
-			var avaliacao = $('#jogo').data('avaliacao');
+			var avaliacaoUsuario = $('#jogo').data('avaliacaousuario');
 			$('#estrelas').barrating({
 		      theme: 'fontawesome-stars-o',
-		      initialRating: avaliacao,
-		      showSelectedRating: false,
+		      initialRating: avaliacaoUsuario,
+		      allowEmpty: true,
+		      deselectable: true,
 		      onSelect: function(value, text) {
-	            if (!value) {
-					$('#estrelas')
-	                .barrating('clear');
-	            } else {
-	               	avaliaJogo(value, false);
-	             }
-	         },
-	         onClear: function(value, text) {
-	         	$('#estrelas')
-				.find('.current-rating')
-				.removeClass('hidden')
-				.end()
-				.find('.your-rating')
-				.addClass('hidden');
+	            avaliaJogo(value, false);
 	         }
-		    });
-		    $('.clear-rating').on('click', function(){
-		    	avaliaJogo(0, true);
 		    });
 		 });
 		$(".btn").on('click', function(event){
 			$(this).prop( "disabled", true );
 			jaJogou();
-			$(this).toggleClass('btn-success btn-default');
-			if (isJogou){
-				atualizaAvaliacao(0);
+			if (isJogou()){
+				$("#estrelas").barrating('clear');
 			}
+			$(this).toggleClass('btn-success btn-default');
 		});
 	</script>
 @stop
