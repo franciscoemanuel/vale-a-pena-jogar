@@ -33,6 +33,11 @@ class Jogo extends Model
 		return $this->belongsTo('vapj\Desenvolvedor', 'idDesenvolvedor');
 	}
 
+	//Retorna críticas do jogo
+	public function criticas(){
+		return $this->hasMany('vapj\Critica', 'idJogo');
+	}
+
 	//Subscreve atributo que identifica a chave primária do modelo
 	protected $primaryKey = "idJogo";
 

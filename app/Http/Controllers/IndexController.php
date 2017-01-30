@@ -2,7 +2,7 @@
 namespace vapj\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use JavaScript;
 class IndexController extends Controller
 {
 

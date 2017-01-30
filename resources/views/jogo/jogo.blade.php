@@ -4,186 +4,152 @@
 
 @section('styles')
 <link rel="stylesheet" type="text/css" href="{{asset('css/fontawesome-stars-o.css')}}">
-<style type="text/css">
-	.tituloJogo{
-		width: 100%;
-	}
-	.titulo{
-		font-size: 40px;x
-	}
-	.detalhes b{
-		font-weight: strong;
-	}
-	.imagens{
-		float: left;
-		margin-right: 0.5em;
-	}
-	.containerBotao{
-		float: right;
-		line-height: 5;
-	}
-	.avaliacaoUsuario{
-		font-weight: bold;
-		font-size: 16px;
-		font-family: arial;
-	}
-	.avaliacaoMedia{
-		font-size: 20px;
-		font-weight: bold;
-	}
-	.notaAvaliacao{
-		text-align: center;
-	}
-	.avaliacaoMediaTitulo{
-		float: left;
-		border-right: 1px solid #f3f3f3;
-		text-align: center;
-		width: 50%;
-	}
-	.avaliacaoMediaTitulo h2{
-		margin: 0
-	}
-	
-	.info{
-		background-color:#FAFAFA;
-		float: left;
-		max-width: 68rem;
-	}
-	.descricaoJogo{
-		clear: both;
-	}
-	.section{
-		font-size: 130%;
-		border:1px solid #EFEFEF;		
-		padding: 1%;
-		border-radius:3px;
-		border:1px solid #EFEFEF;
-		width: 100%; 	
-		line-height: 2.6;
-		display: inline-block;
-	}
-</style>
+<link rel="stylesheet" type="text/css" href="{{asset('css/jogo.css')}}">
 @stop
 
 @section('conteudo')
-	<div id="jogo" data-idJogo="{{$jogo->idJogo}}" data-avaliacao="{{$avaliacaoMedia}}" data-avaliacaoUsuario="{{$avaliacaoUsuario}}">
-		<div class="page-header">		
-			<span class="titulo">{{$jogo->nomeJogo}}</span>
-				<div class="containerBotao">
-					<button id="botao-JaJoguei" class="btn {{ $usuarioPossuiJogo ? 'btn-success' : 'btn-default'}}" >
-						Já joguei <i class="glyphicon glyphicon-ok"></i>
-					</button>
+ 	<div class="container jogo">
+ 		<div class="page-header">
+ 			<div class="row">
+ 				<div class="col-md-8">
+	 				<span class="titulo">{{$jogo->nomeJogo}}</span>
+	 			</div>
+	 			<div class="col-md-2 col-md-offset-2">
+		 			<button id="btn-joguei" class="btn {{ $usuarioPossuiJogo ? 'btn-success' : 'btn-default'}}" >
+		 				Já joguei <i class="glyphicon glyphicon-ok"></i>
+		 			</button>
+	 			</div>
+ 			</div>
+ 		</div>
+ 		<div class="well">
+ 			<div class="container-fluid">
+ 				<div class="row">
+ 					<div class="fotosJogo col-md-5">
+ 						<img src={{asset('images/placeholder.png')}}>
+ 					</div>
+ 					<div class="col-md-7 detalhes">
+	 					<div class="col-md-7">
+	 							<h4>Desenvolvedor: <small>{{$jogo->desenvolvedor->nomeDesenvolvedor}}</small></h4>
+	 							<h4>Distribuidora:  <small>{{$jogo->distribuidora->nomeDistribuidora}}</small></h4>
+	 							<h4>Data de lançamento: <small>{{$jogo->dataLancamento->format('d/m/Y')}}</small></h4>
+	 					</div>
+	 					<div class="avaliacaoMedia col-md-4 col-md-offset-1">
+	 						<div class="notaMedia"><i class="fa fa-star"></i>  {{$jogo->notaMedia}} <small>/ 5</small></div>
+	 						<small class="numCriticas">(baseado em {{$jogo->numCriticas}} {{str_plural('critica',$jogo->numCriticas)}})</small>	
+	 					</div>
+	 					<div class="col-md-12 categorias">
+	 						<span class="label label-primary">{{$jogo->quantidadeJogadores}}</span>
+	 						@foreach($jogo->categorias as $categoria)
+	 							<span class="label label-primary">{{$categoria->nomeCategoria}}</span>
+	 						@endforeach
+	 					</div>
+ 					</div>
+ 				</div>
+ 				<div class="row">
+ 					<div class="col-md-12 sobre">
+ 						<strong>Sobre o jogo: </strong>
+ 						<p>{{$jogo->descricao}}</p>
+ 					</div>
+ 				</div>
+ 			</div>
+ 		</div>
+ 	</div>
+	<div class="modal fade" id="criticaModal" tabindex="-1" role="dialog" hidden="true">
+	    <div class="modal-dialog">
+	        <div class="modal-content">
+	        	<div class="modal-header well">
+	        		<button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
+	        		<strong>Crítica</strong>
+	        	</div>
+	        	<div class="modal-body">
+					<form id="criticaForm">
+						<div class="form-group" id="div-comentario">
+							<textarea maxlength="200" class="form-control" name="comentario" id="txt-comentario" rows="3" required placeholder="Vale a pena jogar?">{{$criticaUsuario ? $criticaUsuario->comentario : ''}}</textarea>
+							<span class="help-block">
+							    <strong id="erro-comentario"></strong>
+							</span>
+						</div>
+						<div class="form-group" id="div-nota">
+							<select name="nota" id="select-nota">
+								<option value="1">1</option>
+								<option value="2">2</option>
+								<option value="3">3</option>
+								<option value="4">4</option>
+								<option value="5">5</option>
+							</select>
+							<span class="help-block">
+							    <strong id="erro-nota"></strong>
+							</span>
+						</div>
+						<input type="hidden" name="_token" value="{{csrf_token()}}" />
+						<input type="hidden" name="idJogo" value="{{$jogo->idJogo}}" />
+						<div class="text-right">
+							<button type="submit" class="btn btn-primary" id="btn-critica" ><i class="fa fa-share-square-o"></i> Enviar</button>
+							<button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+						</div>
+					</form>
 				</div>
-		</div>
-			<div class="imagens">
-				<img src={{asset('images/placeholder.png')}}>
 			</div>
-			<div class="info">
-				<div class="section detalhes">
-				<div>
-					<b>Distribuido por:</b> {{$jogo->distribuidora->nomeDistribuidora}}
-				</div>
-
-				<div>
-					<b>Desenvolvido por:</b> {{$jogo->desenvolvedor->nomeDesenvolvedor}}
-				</div>
-
-				<div>
-					<b>Data de lançamento: </b> {{$jogo->dataLancamento->format('d/m/Y')}}
-				</div>
-			</div>
-				<div class="section avaliacao">
-					<span class="avaliacaoMediaTitulo">
-					<h4>Avaliação média: </h4>
-					<h2 class="bold">{{$avaliacaoMedia}} <small>/ 5</small></h2>
-					</span>
-					<span class="notaAvaliacao">
-					<h4 class="bold">Sua avaliação: </h4> 
-						<select id="estrelas">
-						  <option></option>
-						  <option value="1">1</option>
-						  <option value="2">2</option>
-						  <option value="3">3</option>
-						  <option value="4">4</option>
-						  <option value="5">5</option>
-						</select>
-		            </span>
-				</div>
-				<div class="section categorias">
-					@foreach($jogo->categorias as $categoria)
-						<span class="label label-primary">{{$categoria->nomeCategoria}}</span>
-					@endforeach
-				</div>
-		</div>
-		<div class="descricaoJogo">
-			{{$jogo->descricao}}
 		</div>
 	</div>
+
+	<div class="container-fluid comentario-usuario">
+		<div class="row">
+			<div class="col-md-8">
+				<div class="col-md-6">
+					<h3>Críticas</h3>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-8">
+				@if (!$criticaUsuario)
+				<div class="well">
+					<strong>Você não avaliou este jogo..</strong>
+					<button class="btn btn-default" data-toggle="modal" data-target={{Auth::guest() ? "#loginModal" : "#criticaModal"}}>
+						Avaliar <i class="glyphicon glyphicon-star"></i>
+					</button>
+				</div>
+				@endif
+			</div>
+		</div>	
+		@foreach ($criticas as $critica)
+			<div class="row criticasJogo" id="criticas">
+				<div class="col-md-1 col-xs-2">
+					<div class="thumbnail">
+						<img class="img-responsive user-photo" src="{{asset('images/avatar.png')}}">
+					</div><!-- /thumbnail -->
+				</div>
+				<div class="col-md-5 col-xs-9">
+					<div class="panel panel-default comentarios">
+						<div class="panel-heading">
+							<strong>{{$critica->usuario->nomeUsuario}}</strong>
+							<span>{{$critica->dataCriacao}}</span>
+							<span class="notaCritica">
+								<i class="fa fa-star"></i> 
+								{{$critica->nota ? $critica->nota : 0}}/
+								<small>5</small> 
+							</span>
+						</div>
+						<div class="panel-body">
+							<span class="comentario">{{$critica->comentario}}</span>
+						</div>
+						@if ($criticaUsuario && $critica->idCritica == $criticaUsuario->idCritica)
+						<div class="panel-footer">
+								<a id="link-editar" href="#" data-toggle="modal" data-target="#criticaModal"><i class="fa fa-pencil"></i> Editar</a>
+								<a href="#" data-idCritica="{{$critica->idCritica}}" data-toggle="confirmation"><i class="fa fa-trash-o"></i> Excluir</a>
+						</div>
+ 						@endif
+					</div>
+				</div>
+			</div>
+			@endforeach
+			{{$criticas->links()}}
+	</div>  
 @stop
 
 @section('scripts')
 	<script src="{{asset('js/jquery.barrating.min.js')}}"></script>
-	<script type="text/javascript">
-	var idJogo = $('#jogo').data('idjogo');
-	var url = "{{ route('jogou') }}";
-	function isJogou(){
-		var isJogou = $('.btn').attr('class') === "btn btn-success";
-		return isJogou;
-	}
-	function avaliaJogo(avaliacao, jaAvaliou){
-		$.ajax({
-			method: 'POST',
-			url: url,
-			data: {idJogo: idJogo,jaAvaliou: jaAvaliou,avaliacao: avaliacao,_token: window.Laravel.csrfToken,},
-			success: function(msg){
-				console.log(msg['msg']);
-			},
-			error: function(msg){
-				alert(msg);
-				console.log("Erro ao realizar operação");
-			},
-			complete: function(){
-				$("#estrelas").prop( "disabled", false );
-			}
-		});
-	 	if (!isJogou())
-		 	$('.btn').toggleClass('btn-success btn-default');
-	}
-	function jaJogou(){
-		$.ajax({
-			method: 'POST',
-			url: url,
-			data: {idJogo: idJogo,isJogou: isJogou(),_token: window.Laravel.csrfToken,},
-			success: function(msg){
-				console.log(msg['msg']);
-			},
-			error: function(msg){
-				console.log("Erro ao realizar operação");
-			},
-			complete: function(){
-				$('.btn').prop( "disabled", false );
-			}
-		});
-	}
-		$(function() {
-			var avaliacaoUsuario = $('#jogo').data('avaliacaousuario');
-			$('#estrelas').barrating({
-		      theme: 'fontawesome-stars-o',
-		      initialRating: avaliacaoUsuario,
-		      allowEmpty: true,
-		      deselectable: true,
-		      onSelect: function(value, text) {
-	            avaliaJogo(value, false);
-	         }
-		    });
-		 });
-		$(".btn").on('click', function(event){
-			$(this).prop( "disabled", true );
-			jaJogou();
-			if (isJogou()){
-				$("#estrelas").barrating('clear');
-			}
-			$(this).toggleClass('btn-success btn-default');
-		});
-	</script>
+	<script src="{{asset('js/jogo.js')}}"></script>
+	<script src="{{asset('js/bootstrap-confirmation.min.js')}}"></script>
 @stop

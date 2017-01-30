@@ -43,17 +43,26 @@ class User extends Authenticatable
         $this->attributes['dataNascimentoUsuario'] = \Carbon\Carbon::createFromFormat('d/m/Y', $value);
     }
 
+    //Retorna jogos do usuário
     public function jogos(){
-        return $this->belongsToMany('vapj\Jogo', 'usuario_jogo', 'idUsuario', 'idJogo')->withPivot('avaliacao');
+        return $this->belongsToMany('vapj\Jogo', 'usuario_jogo', 'idUsuario', 'idJogo');
     }
 
+    //Retorna se o usuário possui o jogo ou não
     public function possuiJogo($idJogo){
         $jogo = $this->jogos()->where('usuario_jogo.idJogo', $idJogo)->first();
         return $jogo != null;
     }
 
-    public function avaliacaoJogo($idJogo){
-        $jogo = $this->jogos()->where('usuario_jogo.idJogo', $idJogo)->first();
-        return $jogo != null ? $jogo->pivot->avaliacao : false;
+    //Retorna nota do jogo em que o usuário fez a crítica
+    public function criticaDoJogo($idJogo){
+        $critica = $this->criticas()->where('idJogo', $idJogo)->first();
+        /*return $critica != null ? $critica : null;*/
+        return $critica;
+    }
+
+    //Retorna criticas do usuário
+    public function criticas(){
+        return $this->hasMany('vapj\Critica', 'idUsuario');
     }
 }

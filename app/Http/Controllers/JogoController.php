@@ -15,7 +15,7 @@ class JogoController extends Controller
 
 	//Mostra página com todos os jogos
 	public function index(){
-		$jogos = Jogo::paginate(21);
+		$jogos = Jogo::paginate(20);
 		return view ('jogo.index')->withJogos($jogos);
 	}
 
@@ -44,16 +44,26 @@ class JogoController extends Controller
 	//Mostra página do jogo especificado no parâmetro da função
 	public function show($nomeJogo){
 		$jogo = \vapj\Jogo::where('nomeJogo', $nomeJogo)->firstOrFail();
-		$avaliacaoMedia = DB::table('usuario_jogo')->where('idJogo',$jogo->idJogo)->avg('avaliacao');
-		$avaliacaoMedia = number_format(floatval($avaliacaoMedia), 1);
-		$avaliacaoUsuario = \Auth::check() ? \Auth::user()->avaliacaoJogo($jogo->idJogo) : "null";
+		/*$avaliacaoMedia = DB::table('criticas')->where('idJogo',$jogo->idJogo)->avg('nota');
+		$avaliacaoMedia = number_format(floatval($avaliacaoMedia), 1);*/
+		$criticaUsuario = \Auth::check() ? \Auth::user()->criticaDoJogo($jogo->idJogo) : null;
 		$usuarioPossuiJogo = \Auth::check() ? \Auth::user()->possuiJogo($jogo->idJogo) : false;
+		$criticas = $jogo->criticas()->orderBy('created_at', 'desc')->paginate(10);
+		JavaScript::put([
+			'isLogado' => \Auth::check(), 
+			'urlJogou' => route('jogou'),
+			'urlCritica' => route('critica'),
+			'idJogo'   => $jogo->idJogo,
+			'avaliacaousuario' => $criticaUsuario ? $criticaUsuario->nota : null,
+			/*'notaMedia' => $jogo->notaMedia,*/
+			'usuarioPossuiJogo' => $usuarioPossuiJogo,
+		]);
 		return view('jogo.jogo', array(
 				"jogo" => $jogo,
-				"avaliacaoMedia" => $avaliacaoMedia,
-				"avaliacaoUsuario" => $avaliacaoUsuario,
-				"usuarioPossuiJogo" => $usuarioPossuiJogo
-			));
+				"criticas" => $criticas,
+				"usuarioPossuiJogo" => $usuarioPossuiJogo,
+				"criticaUsuario" => $criticaUsuario
+		));
 	}
 
 	//Mostra página de edição do jogo

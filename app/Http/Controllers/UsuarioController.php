@@ -7,10 +7,21 @@ use vapj\User;
 use vapj\Http\Requests;
 use Auth;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\Lang;
 class UsuarioController extends Controller{
 
     //Classe que autentica usuário na aplicação.
     use AuthenticatesUsers;
+
+     //Página de redirecionamento após sucesso da autenticação.
+    protected $redirectTo = '/'; 
+
+    //Contrutor da classe, que ao ser instanciada especifica o middleware guest
+    public function __construct()
+    {   
+        //Middleware que redireciona para a home caso o usuário esteja logado
+        $this->middleware('guest', ['except' => ['logout', 'jogou', 'critica']]);
+    }
 
     //Mostra a view de cadastro de usuários
     public function create(){
@@ -38,8 +49,8 @@ class UsuarioController extends Controller{
     //Método que autentica usuário na aplicação, utilizando métodos da classe AuthenticatesUsers.
     public function login(Request $request){
         $credenciais = [
-        "emailUsuario" => $request->input('emailUsuario'),
-        "password" => $request->input('senhaUsuario'),   
+            "emailUsuario" => $request->input('emailUsuario'),
+            "password" => $request->input('senhaUsuario'),   
         ];
         if($this->guard()->attempt($credenciais, $request->has('remember'))){
             return $this->sendLoginResponse($request);
@@ -47,31 +58,49 @@ class UsuarioController extends Controller{
         return $this->sendFailedLoginResponse($request);
     }
 
+      /**
+     * Subistitui método de retorno quando ocorre falha na autenticação.
+     *
+     * @param \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    protected function sendFailedLoginResponse(Request $request)
+    {
+        if ($request->ajax()) {
+            return response()->json([
+                'error' => Lang::get('auth.failed')
+            ], 401);
+        }
+
+        return redirect()->back()
+            ->withInput($request->only($this->username(), 'remember'))
+            ->withErrors([
+                $this->username() => Lang::get('auth.failed'),
+            ]);
+    }
+
     //Adiciona jogos confirmados como jogados a tabela pivô
     public function jogou(Request $request){
         $usuario = Auth::user();
-        $isJogou = $request->isJogou;
+        $usuarioPossuiJogo = $request->usuarioPossuiJogo;
         $idJogo = $request->idJogo;
-        $avaliacao = $request->avaliacao != '' ? $request->avaliacao : null;
         if ($usuario == null)
-            return response()->json(['msg' => 'Usuário não está logado']);
-        if ($isJogou == "true"){
+            return response('Falha na autenticação', 401);
+        if ($usuarioPossuiJogo == "true")
             $usuario->jogos()->detach($idJogo);
-            return response()->json(['msg' => 'Jogo deletado da biblioteca com sucesso!']);
-        }
-        $usuario->jogos()->sync([$idJogo => ['avaliacao'=>$avaliacao]]);
+        else
+            $usuario->jogos()->sync([$idJogo]);
         //$usuario->jogos()->attach([$request->idJogo => ['avaliacao'=>$request->avaliacao] ]);
-        return response()->json(['msg' => 'Jogo adicionado a biblioteca com sucesso!']);
+        return response()->json([
+            "jogo" => $idJogo,
+            "usuarioPossuiJogo" => $usuarioPossuiJogo != "true",
+        ]);
     }
 
-    //Página de redirecionamento após sucesso da autenticação.
-    protected $redirectTo = '/'; 
-
-    //Contrutor da classe, que ao ser instanciada especifica o middleware guest
-    public function __construct()
-    {   
-        //Middleware que redireciona para a home caso o usuário esteja logado
-        $this->middleware('guest', ['except' => ['logout', 'jogou']]);
+    // View do perfil do usuário
+    public function show($usuario){
+        $usuario = User::where("nomeUsuario", $usuario)->firstOrFail();
+        return view('usuario.perfil')->withUsuario($usuario);
     }
 }
 

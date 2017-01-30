@@ -2,6 +2,7 @@
 
 Route::get('/', 'IndexController@index');
 
+
 /*Rotas declaradas para o controller de usuários*/
 
 Route::get('/cadastro', 'UsuarioController@create');
@@ -15,6 +16,10 @@ Route::post('/login', 'UsuarioController@login');
 Route::post('/logout', 'UsuarioController@logout');
 
 Route::post('/jogou', 'UsuarioController@jogou')->name('jogou');
+
+Route::get('/usuarios/{usuario}', 'UsuarioController@show');
+
+Route::get('/usuarios/{usuario}/jogos', 'UsuarioController@jogos')->name('jogos_usuario');
 
 /*Rotas declaradas para o controller de jogos*/
 
@@ -49,3 +54,23 @@ Route::get('/distribuidoras/cadastro', 'DistribuidoraController@create');
 Route::post('/distribuidoras/cadastro', 'DistribuidoraController@store');
 
 Route::get('/autocomplete/distribuidoras', 'DistribuidoraController@buscaDistribuidorasJson');
+
+//Rotas declaradas para o controller de críticas
+Route::post('/critica', [
+	'uses' => 'CriticaController@store',
+    'as'  => 'critica'	
+]);
+
+Route::get('/critica', [
+	'uses' => 'CriticaController@criticas'
+]);
+
+Route::put('/critica/{id}', [
+	'uses' => 'CriticaController@update'
+]);
+
+Route::delete('/critica/{id}', [
+	'uses' => 'CriticaController@destroy'
+]);
+
+

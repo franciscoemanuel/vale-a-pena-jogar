@@ -3,49 +3,30 @@
 @section('titulo', '| Jogos')
 
 @section('styles')
-	<style type="text/css">
-	.jogoContainer {
-		display: inline-block;
-	    position: relative;
-	    width: 180px;
-	    height: 150px;
-	    margin: 0 9px;
-	}
-	.titulo{
-		margin-top: 8px;
-		word-wrap: break-word;
-		font-weight: bold;
-		font-size: inherit;
-	}
-	.listaJogos{
-		display: inline-block;
-		float: none;
-		list-style: none;
-		vertical-align: top;
-		margin-bottom: 20px;
-		margin-left: 14px;
-	}
-	.listaJogos{
-		text-align: center;
-		display: inline-block;
-		font-size: 11.9px;
-		line-height: 14.28px;
-	}
-	</style>
+	<link rel="stylesheet" type="text/css" href="{{asset('css/jogos.css')}}">
 @stop
 
 @section('conteudo')
-	<ul>
-	@foreach($jogos as $jogo)
-		<li class="listaJogos">
-			<span class="jogoContainer">
+	<div class="row">
+		@foreach($jogos as $jogo)
+		<div class="col-md-3 col-sm-4">
+			<div class="thumbnail">
 				<a href="{{url('/jogos/'.$jogo->nomeJogo)}}">
-					<img class="img-thumbnail" src={{asset('images/placeholder.png')}}>
-					<h3 class="titulo">{{$jogo->nomeJogo}}</h3>
+					<img src={{asset('images/placeholder.png')}} class="img-responsive">
 				</a>
-			</span>
-		</li>
-	@endforeach
-	</ul>
+				<div class="detalhes">
+					<div class="row">
+						<div class="col-md-12">
+							<a href="{{url('/jogos/'.$jogo->nomeJogo)}}">
+								<h5>{{$jogo->nomeJogo}}</h5>
+							</a>
+							<p><strong>{{$jogo->notaMedia}}</strong> <i class="fa fa-star"></i> <small> - <a href="{{url('/jogos/'.$jogo->nomeJogo)}}#criticas">{{$jogo->numCriticas}} {{str_plural('critica',$jogo->numCriticas)}}</small></a></p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		@endforeach
+	</div>
 	{{ $jogos->links() }}
 @stop
