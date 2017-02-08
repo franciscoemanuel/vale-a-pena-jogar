@@ -1,7 +1,7 @@
 ## Vale a pena jogar? ##
 
 ### Instalação ###
-* `git clone https://github.com/franciscoemanuel/vale-a-pena-jogar.git`
+* `git clone https://github.com/franciscoemanuel/vale-a-pena-jogar`
 * `composer install`
 * `php artisan key:generate`
 * `Criar banco de dados e informar .env`
