@@ -15,9 +15,14 @@ class Autorizador
      */
     public function handle($request, Closure $next)
     {
-        if (!$request->is('login') && \Auth::guest()){
-            return redirect('/home');
+        if ($request->is('login') && !\Auth::guest()){
+            return redirect('/');
         }
+
+        if ($request->is('cadastro') && !\Auth::guest()){
+            return redirect('/');
+        }
+
 
         return $next($request);
     }

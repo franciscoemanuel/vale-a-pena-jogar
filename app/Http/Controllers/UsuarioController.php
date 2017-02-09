@@ -20,7 +20,8 @@ class UsuarioController extends Controller{
     public function __construct()
     {   
         //Middleware que redireciona para a home caso o usuário esteja logado
-        $this->middleware('guest', ['except' => ['logout', 'jogou', 'critica']]);
+        /*$this->middleware('guest', ['except' => ['logout', 'jogou', 'critica']]);*/
+        $this->middleware('autorizador');
     }
 
     //Mostra a view de cadastro de usuários
@@ -37,7 +38,7 @@ class UsuarioController extends Controller{
             'nomeCompletoUsuario' => $request->input('nomeCompletoUsuario'),
             'sexo' => $request->input('sexo'),
             'dataNascimentoUsuario' => $request->input('dataNascimentoUsuario')
-            ]);
+        ]);
         return redirect('/login');
     }
 
@@ -100,7 +101,8 @@ class UsuarioController extends Controller{
     // View do perfil do usuário
     public function show($usuario){
         $usuario = User::where("nomeUsuario", $usuario)->firstOrFail();
-        return view('usuario.perfil')->withUsuario($usuario);
+        $criticas = $usuario->criticas()->orderBy('created_at', 'desc')->paginate(10);
+        return view('usuario.perfil')->withUsuario($usuario)->withCriticas($criticas);
     }
 }
 

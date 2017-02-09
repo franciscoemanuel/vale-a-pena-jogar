@@ -1,4 +1,4 @@
-<nav class="navbar navbar-default navbar-static-top">
+<nav class="navbar navbar-default ">
 
     <div class="navbar-header">
 
@@ -9,7 +9,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
         </button>
-        <img style="max-width: 13%; max-height: 10%; float: left" src="{{ URL::to('/') }}/images/joystickIcone.png">
+        <img style="max-width: 50px; max-height: 50px; float: left" src="{{ URL::to('/') }}/images/joystickIcone.png">
         <a class="navbar-brand" href="/">
             Vale a pena jogar?
         </a>
@@ -24,27 +24,31 @@
             <li {{ Request::is('usuarios') ? 'class = active ' : null }} ><a href="/usuarios"><i class="glyphicon glyphicon-user"></i> Usuários</a></li>
         </ul>
         <!-- Right Side Of Navbar -->
-        <div class="container">
+        <div>
             <ul class="nav navbar-nav navbar-right">
                 <!-- Authentication Links -->
                 @if (Auth::guest())
                 <!-- <li><a href="{{ url('/login') }}"><span class="glyphicon glyphicon-user"></span> Login </a></li> -->
-                <li><a href="#" data-toggle="modal" data-target="#loginModal"><span class="glyphicon glyphicon-user"></span> Login</a></li>
-                <li><a href="{{ url('/cadastro') }}"><span class="glyphicon glyphicon-log-in"></span> Cadastre-se </a></li>
+                <li><a href="#" data-toggle="modal" data-target="#loginModal">
+                <!-- <span class="glyphicon glyphicon-user"></span> --> Login</a></li>
+                <li><a href="{{ url('/cadastro') }}">
+                <!-- <span class="glyphicon glyphicon-log-in"></span> -->  Cadastre-se </a></li>
             <!--     <li><a href="#" data-toggle="modal" data-target="#registerModal">Cadastro</a></li> -->
                 @else
-                <li class="dropdown">
+                <li class="dropdown col-xs-pull-2">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                         {{ Auth::user()->nomeUsuario }} <span class="caret"></span>
                     </a>
 
                     <ul class="dropdown-menu" role="menu">
                         <li>
-                                <a href="{{ url('/logout') }}"
-                                onclick="event.preventDefault();
-                                document.getElementById('logout-form').submit();">
-                                Logout</a>
-
+                            <a href="/meu-perfil">Meu perfil</a>
+                        </li>
+                        <li>
+                            <a href="{{ url('/logout') }}"
+                            onclick="event.preventDefault();
+                            document.getElementById('logout-form').submit();">
+                            Logout</a>
                             <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
                                 {{ csrf_field() }}
                             </form>

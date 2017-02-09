@@ -99,3 +99,8 @@ body{
 .numCriticas{
 	line-height: 1;
 }
+
+.user-photo{
+	min-height: 30px;
+	min-width: 30px;
+}
