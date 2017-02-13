@@ -90,7 +90,7 @@ class UsuarioController extends Controller{
         if ($usuarioPossuiJogo == "true")
             $usuario->jogos()->detach($idJogo);
         else
-            $usuario->jogos()->sync([$idJogo]);
+            $usuario->jogos()->attach([$idJogo]);
         //$usuario->jogos()->attach([$request->idJogo => ['avaliacao'=>$request->avaliacao] ]);
         return response()->json([
             "jogo" => $idJogo,
@@ -101,8 +101,13 @@ class UsuarioController extends Controller{
     // View do perfil do usuário
     public function show($usuario){
         $usuario = User::where("nomeUsuario", $usuario)->firstOrFail();
-        $criticas = $usuario->criticas()->orderBy('created_at', 'desc')->paginate(10);
-        return view('usuario.perfil')->withUsuario($usuario)->withCriticas($criticas);
+        $criticas = $usuario->criticas()->orderBy('created_at', 'desc')->paginate(10, ['*'], 'pg_criticas');
+        // return view('usuario.perfil')->withUsuario($usuario)->withCriticas($criticas);
+        return view('usuario.perfil', [
+            "usuario" => $usuario,
+            "jogos"   => $usuario->jogos()->paginate(10, ['*'], 'pg_jogos'),
+            "criticas" => $criticas,
+        ]);
     }
 }
 

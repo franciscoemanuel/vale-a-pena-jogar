@@ -8,61 +8,8 @@ body{
 .detalhes b{
 	font-weight: strong;
 }
-.comentarios>.panel-heading:after, .comentarios>.panel-heading:before {
-    position: absolute;
-    top: 11px;
-    left: -16px;
-    right: 100%;
-    width: 0;
-    height: 0;
-    display: block;
-    content: " ";
-    border-color: transparent;
-    border-style: solid solid outset;
-    pointer-events: none;
-}
 .thumbnail {
     padding:0px;
-}
-.comentarios {
-	position:relative;
-}
-.comentarios>.panel-heading:after,.comentarios>.panel-heading:before{
-	position:absolute;
-	top:11px;left:-16px;
-	right:100%;
-	width:0;
-	height:0;
-	display:block;
-	content:" ";
-	border-color:transparent;
-	border-style:solid solid outset;
-	pointer-events:none;
-}
-.comentarios>.panel-heading:after{
-	border-width:7px;
-	border-right-color:#f7f7f7;
-	margin-top:1px;
-	margin-left:2px;
-}
-.comentarios>.panel-heading:before{
-	border-right-color:#ddd;
-	border-width:8px;
-}
-.comentarios.panel-default>.panel-heading{
-	color: #333;
-	background-color: #f5f5f5;
-	border-color: #ddd;
-}
-.notaCritica{
-	float: right;
-	font-weight: bold;
-}
-.fa-star{
-	color: #EDB867;
-}
-.comentario{
-	word-wrap: break-word;
 }
 
 .fotosJogo img{
@@ -84,10 +31,6 @@ body{
 	margin-top: 15px;
 }
 
-.jogo .well, .comentario-usuario .well{
-	background-color: #fff;
-}
-
 .notaMedia{
 	font-size: 30px;
 }
@@ -98,9 +41,4 @@ body{
 
 .numCriticas{
 	line-height: 1;
-}
-
-.user-photo{
-	min-height: 30px;
-	min-width: 30px;
 }
