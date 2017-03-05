@@ -65,7 +65,7 @@
 	        	<div class="modal-body">
 					<form id="criticaForm">
 						<div class="form-group" id="div-comentario">
-							<textarea maxlength="200" class="form-control" name="comentario" id="txt-comentario" rows="3" required placeholder="Vale a pena jogar?">{{$criticaUsuario ? $criticaUsuario->comentario : ''}}</textarea>
+							<textarea maxlength="600" class="form-control" name="comentario" id="txt-comentario" rows="5" required placeholder="Vale a pena jogar?">{{$criticaUsuario ? $criticaUsuario->comentario : ''}}</textarea>
 							<span class="help-block">
 							    <strong id="erro-comentario"></strong>
 							</span>
@@ -84,6 +84,7 @@
 						</div>
 						<input type="hidden" name="_token" value="{{csrf_token()}}" />
 						<input type="hidden" name="idJogo" value="{{$jogo->idJogo}}" />
+						<small class="text-left"> <span id="caracteres">600</span> caracteres restantes</small>
 						<div class="text-right">
 							<button type="submit" class="btn btn-primary" id="btn-critica" ><i class="fa fa-share-square-o"></i> Enviar</button>
 							<button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
@@ -98,7 +99,7 @@
 		<div class="row">
 			<div class="col-md-8">
 				<div class="col-md-6">
-					<h3>Críticas</h3>
+					<h3>Críticas <span class="badge">{{$jogo->numCriticas}}</span></h3>
 				</div>
 			</div>
 		</div>

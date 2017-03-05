@@ -26,7 +26,12 @@ class CriticaController extends Controller
         $this->calculaNotaMedia($request->idJogo);
         return response()->json(['critica' => $critica], 200);
     }
-
+    /**
+     * Calcula novo valor do campo nota média e 
+     *  número de críticas para o jogo. 
+     * @param  int id do jogo
+     * @return \Illuminate\Http\Response
+     */
     public function calculaNotaMedia($idJogo){
         $jogo = \vapj\Jogo::find($idJogo);
         $criticas = $jogo->criticas();
@@ -36,6 +41,10 @@ class CriticaController extends Controller
     }
 
 
+    /**
+     *  retorna todas as criticas em formato json
+     *  @return \Illuminate\Http\Response
+     */
     public function criticas(){
         $criticas = Critica::all();
         $response = [

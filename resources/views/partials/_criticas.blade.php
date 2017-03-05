@@ -5,7 +5,7 @@
 			<img class="img-responsive user-photo" src="{{asset('images/avatar.png')}}">
 		</div><!-- /thumbnail -->
 	</div>
-	<div class="col-md-5 col-xs-9">
+	<div class="col-xs-9">
 		<div class="panel panel-default comentarios">
 			<div class="panel-heading">
 				<a href="/usuarios/{{$critica->usuario->nomeUsuario}}"> <strong>{{$critica->usuario->nomeUsuario}}</strong> </a>
@@ -21,8 +21,8 @@
 			</div>
 			@if ($critica->usuario == \Auth::User())
 			<div class="panel-footer">
-					<a id="link-editar" href="#" data-toggle="modal" data-target="#criticaModal"><i class="fa fa-pencil"></i> Editar</a>
-					<a href="#" data-idCritica="{{$critica->idCritica}}" data-toggle="confirmation"><i class="fa fa-trash-o"></i> Excluir</a>
+				<a id="link-editar" href="#" data-toggle="modal" data-target="#criticaModal"><i class="fa fa-pencil"></i> Editar</a>
+				<a href="#" data-idCritica="{{$critica->idCritica}}" data-toggle="confirmation"><i class="fa fa-trash-o"></i> Excluir</a>
 			</div>
 			@endif
 		</div>

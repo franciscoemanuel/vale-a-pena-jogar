@@ -81,5 +81,20 @@ class JogoController extends Controller
 		//
 	}
 
+	/**
+	 * Método usado para retornar todos os jogos em json
+	 * @param  Illuminate\Http\Request $request
+	 * @return String json dos jogos
+	 */
+	public function buscaJogosJson(Request $request){
+	    $query = $request->input('q');
+	    $jogos = Jogo::where('nomeJogo','LIKE',"%$query%")->get(['idJogo','nomeJogo']);
+	    $json = [];
+	    foreach ($jogos as $jogo) {
+	        $json[] = array('id' => $jogo->idJogo, 'text' => $jogo->nomeJogo);
+	    }
+	    return response()->json($json);
+	}
+
 
 }

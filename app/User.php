@@ -54,6 +54,11 @@ class User extends Authenticatable
         return $jogo != null;
     }
 
+    public function curtiuLista($idLista){
+        $curtida = $this->curtidas()->where('idLista', $idLista)->first();
+        return $curtida != null;
+    }
+
     //Retorna nota do jogo em que o usuário fez a crítica
     public function criticaDoJogo($idJogo){
         $critica = $this->criticas()->where('idJogo', $idJogo)->first();
@@ -64,5 +69,20 @@ class User extends Authenticatable
     //Retorna criticas do usuário
     public function criticas(){
         return $this->hasMany('vapj\Critica', 'idUsuario');
+    }
+
+    //Retorna listas do usuário
+    public function listas(){
+        return $this->hasMany('vapj\Lista', 'idUsuario');
+    }
+
+    //Retorna curtidas do usuário
+    public function curtidas(){
+        return $this->hasMany('vapj\Curtida', 'idUsuario');
+    }
+
+    //Retorna comentários do usuário
+    public function comentarios(){
+        return $this->hasMany('vapj\Comentario', 'idUsuario');
     }
 }

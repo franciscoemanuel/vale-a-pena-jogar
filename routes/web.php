@@ -17,7 +17,7 @@ Route::post('/logout', 'UsuarioController@logout');
 
 Route::post('/jogou', 'UsuarioController@jogou')->name('jogou');
 
-Route::get('/usuarios/{usuario}', 'UsuarioController@show');
+Route::get('/usuarios/{usuario}', 'UsuarioController@show')->name('usuario');
 
 Route::get('/usuarios/{usuario}/jogos', 'UsuarioController@jogos')->name('jogos_usuario');
 
@@ -30,6 +30,8 @@ Route::post('/jogos/cadastro', 'JogoController@store');
 Route::get('/jogos', 'JogoController@index');
 
 Route::get('/jogos/{nomeJogo}', 'JogoController@show');
+
+Route::get("/autocomplete/jogos", "JogoController@buscaJogosJson");
 
 /*Rotas declaradas para o controller de categorias*/
 
@@ -73,4 +75,27 @@ Route::delete('/critica/{id}', [
 	'uses' => 'CriticaController@destroy'
 ]);
 
+
+//Rotas para listas
+Route::get("/listas", "ListaController@index");
+
+Route::get("/listas/nova-lista", "ListaController@create")->name("novaLista");
+
+Route::post("/listas/nova-lista", "ListaController@store");
+
+Route::get("/listas/{id}", "ListaController@show");
+
+Route::get("/listas/editar/{id}", "ListaController@edit")->name("editarLista");
+
+Route::post("/listas/editar/{id}", "ListaController@update");
+
+Route::delete('/listas/excluir/{id}', "ListaController@destroy")->name("excluirLista");
+
+Route::post("/curtirLista", "ListaController@curtirLista")->name("curtirLista");
+
+Route::post('/comentarLista', "ListaController@comentarLista")->name("comentarLista");
+
+//Rotas para comentários
+
+Route::delete("/comentarios/{id}", "ComentarioController@destroy")->name("excluirComentario");
 

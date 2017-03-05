@@ -6,6 +6,7 @@
 <!--Folhas de estilo-->
 <link rel="stylesheet" type="text/css" href="{{asset('css/jogos.css')}}">
 <link rel="stylesheet" type="text/css" href="{{asset('css/_criticas.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('css/_listas.css')}}">
 @stop
 
 @section('conteudo')
@@ -32,7 +33,7 @@
 		  	  <a class="btn-abas" href="#"><i class="fa fa-star-half-o"></i> <strong>Críticas</strong> <span class="badge">{{$usuario->criticas->count()}}</span></a>
 		  </li>
 		  <li>
-		  	  <a class="btn-abas"  href="#"><i class="glyphicon glyphicon-th-list"></i> <strong>Listas</strong> <span class="badge">0</span></a>
+		  	  <a class="btn-abas"  href="#"><i class="glyphicon glyphicon-th-list"></i> <strong>Listas</strong> <span class="badge">{{$usuario->listas->count()}}</span></a>
 		  </li>
 		</ul>
 	</div>
@@ -49,7 +50,12 @@
 			@include('partials._criticas')
 		</div>
 		<div class="listas abas" hidden>
-			<h3>Listas</h3>
+			@if (\Auth::check() && Auth::user()->idUsuario == $usuario->idUsuario)
+			<a href={{route('novaLista')}}>
+				<button class="btn btn-primary">Nova Lista</button>
+			</a>
+			@endif
+			@include('partials._listas')
 		</div>
 	</div>
 </div>

@@ -1,6 +1,7 @@
+@foreach($jogos->chunk(3) as $linha)
 <div class="row">
-	@foreach($jogos as $jogo)
-	<div class="col-md-4 col-xs-6 col-lg-3">
+	@foreach($linha as $jogo)
+	<div class="col-xs-4">
 		<div class="thumbnail">
 			<a href="{{url('/jogos/'.$jogo->nomeJogo)}}">
 				<img src={{asset('images/placeholder.png')}} class="img-responsive">
@@ -19,4 +20,5 @@
 	</div>
 	@endforeach
 </div>
+@endforeach
 {{ $jogos->links() }}

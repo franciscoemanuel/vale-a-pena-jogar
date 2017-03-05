@@ -47,16 +47,6 @@ function excluirCritica(idCritica){
 	})	
 }
 
-function validaUsuario(event){
-	if (!vapj.isLogado){
-		event.abort();
-		/*location.href = "/login";*/
-		$('#loginModal').modal('show');
-		return false;
-	}
-	return true;
-}
-
 $(function() {
     $("#criticaForm").submit(function(e) {
     	e.preventDefault();
@@ -67,23 +57,23 @@ $(function() {
     	$('#erro-comentario').html("");
     	$("#div-comentario").removeClass("has-error");
     	$.ajax({
-        url: vapj.urlCritica,
-        type: 'POST',
-        data: formData,
-        success: function(data) {            
-            location.reload(true);
-        },error: function(data){
-        	var erro = jQuery.parseJSON(data.responseText);
-        	if (erro.nota){
-        		$("#div-nota").addClass("has-error");
-        		$('#erro-nota').html(erro.nota);
-        	}
-        	if (erro.comentario){
-        		$("#div-comentario").addClass("has-error");
-        		$('#erro-comentario').html(erro.comentario);
-        	}
-        }
-    });
+	        url: vapj.urlCritica,
+	        type: 'POST',
+	        data: formData,
+	        success: function(data) {            
+	            location.reload(true);
+	        },error: function(data){
+	        	var erro = jQuery.parseJSON(data.responseText);
+	        	if (erro.nota){
+	        		$("#div-nota").addClass("has-error");
+	        		$('#erro-nota').html(erro.nota);
+	        	}
+	        	if (erro.comentario){
+	        		$("#div-comentario").addClass("has-error");
+	        		$('#erro-comentario').html(erro.comentario);
+	        	}
+	        }
+    	});
     });
 	
 	$('#select-nota').barrating({
@@ -110,4 +100,15 @@ $(function() {
 			excluirCritica(idCritica);
 		}
 	});
+
+	$("#txt-comentario").on('input', function(event) {
+		event.preventDefault();
+		limite = 600;
+		digitado = $(this).val().length;
+		restante = limite - digitado;
+		if (restante > 0) 
+			$("#caracteres").html(restante);
+		else
+			$("#caracteres").html(0);
+	});;
 });

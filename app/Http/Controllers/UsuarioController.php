@@ -101,12 +101,11 @@ class UsuarioController extends Controller{
     // View do perfil do usuário
     public function show($usuario){
         $usuario = User::where("nomeUsuario", $usuario)->firstOrFail();
-        $criticas = $usuario->criticas()->orderBy('created_at', 'desc')->paginate(10, ['*'], 'pg_criticas');
-        // return view('usuario.perfil')->withUsuario($usuario)->withCriticas($criticas);
         return view('usuario.perfil', [
             "usuario" => $usuario,
             "jogos"   => $usuario->jogos()->paginate(10, ['*'], 'pg_jogos'),
-            "criticas" => $criticas,
+            "criticas" => $usuario->criticas()->orderBy('created_at', 'desc')->paginate(10, ['*'], 'pg_criticas'),
+            "listas"   => $usuario->listas()->paginate(10, ['*'], 'pg_listas')
         ]);
     }
 }

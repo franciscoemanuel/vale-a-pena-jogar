@@ -1,9 +1,10 @@
-<?php  
+<?php
+
 namespace vapj\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CriticaJogoRequest extends FormRequest
+class CadastroListaRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,17 +24,15 @@ class CriticaJogoRequest extends FormRequest
     public function rules()
     {
         return [
-            /*'nota' => 'required'*/
-            'comentario' => 'required|max:600'
+            "nomeLista" => "required",
+            "descricaoLista" => "required|max:1200"
         ];
     }
 
     public function messages(){
         return [
-            /*'nota.required' => 'Dê sua nota'*/
-            'comentario.required' => 'Insira sua crítica',
-            'comentario.max' => 'O comentário tem um limite de 600 caracteres'
+            'required' => 'O campo :attribute é obrigatório',
+            "descricaoLista.max" => "A descrição deve ter no máximo 1200 caracteres"
         ];
     }
 }
-?>
