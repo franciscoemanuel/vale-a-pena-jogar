@@ -9,14 +9,14 @@
                    </a>
                    <p>{{$lista->descricaoLista}}</p>
                    <div class="row rating-desc">
-                       <div class="col-md-8">
+                       <div class="col-md-8 col-xs-6">
                        		<a href="/listas/{{$lista->idLista}}/#comentarios"><span class="fa fa-comments"></span> ({{$lista->qtdComentarios}} {{str_plural('comentario',$lista->qtdComentarios)}}) </a>
             							<span class="separator">|</span>
             							<span class="fa fa-thumbs-o-up"></span> ({{$lista->qtdCurtidas}} {{str_plural('curtida',$lista->qtdCurtidas)}})
             							<span class="separator">|</span>
             							<span class="fa fa-list"> </span> ({{$lista->qtdJogos}} {{str_plural('jogo',$lista->qtdJogos)}})
                        </div>
-                      <div class="col-xs-2 col-xs-offset-2 text-right">
+                      <div class="col-md-2 col-md-offset-2 col-xs-6 text-right">
        					<a href="{{route('usuario', $lista->usuario->nomeUsuario)}}"><small>Criada por {{$lista->usuario->nomeUsuario}}</small></a>
                       </div>
                    </div>

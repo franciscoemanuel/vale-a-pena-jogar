@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Jogo extends Model
 {
 	//Campos que são permitidos serem preenchidos
-	protected $fillable = array('nomeJogo','dataLancamento','descricao','quantidadeJogadores','idDistribuidora','idDesenvolvedor');
+	protected $fillable = array('nomeJogo','dataLancamento','descricao','quantidadeJogadores','idDistribuidora','idDesenvolvedor', 'imagemJogo');
   
 	//Não usa timestamps na tabela do modelo
     public $timestamps = false;
@@ -38,9 +38,20 @@ class Jogo extends Model
 		return $this->hasMany('vapj\Critica', 'idJogo');
 	}
 
+	//Retorna usuário que já jogaram o jogo
+	public function usuario(){
+		return $this->belongsToMany('vapj\Jogo', 'usuario_jogo', 'idJogo', 'idUsuario');
+	}
+
 	//Subscreve atributo que identifica a chave primária do modelo
 	protected $primaryKey = "idJogo";
 
 	//Atributo que indica quais campos deverão ser retornados como instâncias de um objeto Carbon
 	protected $dates = ['dataLancamento'];
+
+	//Retorna data de de lançamento formatada
+	public function getDataLancamentoAttribute(){
+		$date = \Carbon\Carbon::parse($this->attributes['dataLancamento'])->format('d/m/Y');
+		return $date;
+	}
 }

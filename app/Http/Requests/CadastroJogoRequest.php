@@ -21,7 +21,8 @@ class CadastroJogoRequest extends FormRequest
               'quantidadeJogadores' => 'required',
               'distribuidora' => 'required',
               'desenvolvedor' => 'required',
-              'categorias' => 'required'
+              'categorias' => 'required',
+              'imagemJogo' => 'sometimes|image'
         ];
     }
 

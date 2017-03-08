@@ -5,3 +5,11 @@ body{
 .fa-star{
     color: #EDB867;
 }
+
+.titulo{
+	font-size: 30px;
+}
+
+.subTitulo{
+	font-size: 20px;
+}

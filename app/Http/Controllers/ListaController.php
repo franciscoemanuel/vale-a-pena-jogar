@@ -14,9 +14,25 @@ class ListaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {  
-        $listas = Lista::paginate(20);
+        $listas = new Lista;
+
+        $query = $request->has('busca') ? $request->busca : '';
+
+        $ordem = $request->has('ordem') ? $request->ordem : 'qtdCurtidas';
+
+        $ascDesc = $ordem == "nomeLista" ? 'asc' : 'desc';
+
+        $listas = $listas->where('nomeLista', 'LIKE', "%$query%");
+
+        $listas = $listas->orderBy($ordem, $ascDesc);
+
+        $listas = $listas->paginate(10)->appends([
+            'busca' => $request->busca,
+            'ordem' => $request->ordem
+        ]);
+
         return view("lista.index")->withListas($listas);
     }
 

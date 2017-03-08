@@ -1,6 +1,6 @@
 <?php
 
-Route::get('/', 'IndexController@index');
+Route::get('/', 'IndexController@index')->name('index');
 
 
 /*Rotas declaradas para o controller de usuários*/
@@ -27,9 +27,13 @@ Route::get('/jogos/cadastro', 'JogoController@create');
 
 Route::post('/jogos/cadastro', 'JogoController@store');
 
-Route::get('/jogos', 'JogoController@index');
+Route::get('/jogos', 'JogoController@index')->name('jogos.index');
 
-Route::get('/jogos/{nomeJogo}', 'JogoController@show');
+Route::get('/jogos/{nomeJogo}', 'JogoController@show')->name('jogos.single');
+
+Route::get('/jogos/editar/{nomeJogo}', 'JogoController@edit')->name('editarJogo');
+
+Route::post('/jogos/editar/{nomeJogo}', 'JogoController@update');
 
 Route::get("/autocomplete/jogos", "JogoController@buscaJogosJson");
 

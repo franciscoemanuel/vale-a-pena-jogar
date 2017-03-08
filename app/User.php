@@ -85,4 +85,11 @@ class User extends Authenticatable
     public function comentarios(){
         return $this->hasMany('vapj\Comentario', 'idUsuario');
     }
+
+    //Retorna data de nascimento formatada
+    public function getDataNascimentoUsuarioAttribute()
+    {
+      $date = \Carbon\Carbon::parse($this->attributes['dataNascimentoUsuario'])->format('d/m/Y');
+      return $date;
+    }
 }

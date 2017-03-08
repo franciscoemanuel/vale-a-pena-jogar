@@ -3,6 +3,11 @@
 @section('styles')
 <link rel="stylesheet" type="text/css" href="{{asset('css/jogos.css')}}">
 <link rel="stylesheet" type="text/css" href="{{asset('css/_criticas.css')}}">
+<style type="text/css">	
+.comentarios .thumbnail{
+	padding: 0px;
+}
+</style>
 @stop
 
 @section('conteudo')
@@ -70,14 +75,10 @@
 
 <div class="container-fuild comentarios" id="#comentarios">
 	<div class="row">
-		<div class="col-md-8">
-			<div class="col-md-6">
-				<h3>Comentários <span class="badge">{{$lista->qtdComentarios}}</span></h3>
-			</div>
+		<div class="col-xs-12">
+			<h3>Comentários <span class="badge">{{$lista->qtdComentarios}}</span></h3>
 		</div>
-	</div>
-	<div class="row">
-		<div class="col-md-2">
+		<div class="col-xs-2">
 			@if (!$comentarioUsuario)
 			<a href="#" data-toggle="modal" data-target={{Auth::guest() ? "#loginModal" : "#comentarioModal"}} class="btn btn-default">Deixar um comentário <span class="fa fa-commenting-o"></span></a>
 			@endif

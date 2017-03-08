@@ -26,13 +26,13 @@
  			<div class="container-fluid">
  				<div class="row">
  					<div class="fotosJogo col-md-5">
- 						<img src={{asset('images/placeholder.png')}}>
+ 						<img src="{{asset('images/jogos/'.$jogo->imagemJogo)}}">
  					</div>
  					<div class="col-md-7 detalhes">
 	 					<div class="col-md-7">
 	 							<h4>Desenvolvedor: <small>{{$jogo->desenvolvedor->nomeDesenvolvedor}}</small></h4>
 	 							<h4>Distribuidora:  <small>{{$jogo->distribuidora->nomeDistribuidora}}</small></h4>
-	 							<h4>Data de lançamento: <small>{{$jogo->dataLancamento->format('d/m/Y')}}</small></h4>
+	 							<h4>Data de lançamento: <small>{{$jogo->dataLancamento}}</small></h4>
 	 					</div>
 	 					<div class="avaliacaoMedia col-md-4 col-md-offset-1">
 	 						<div class="notaMedia"><i class="fa fa-star"></i>  {{$jogo->notaMedia}} <small>/ 5</small></div>

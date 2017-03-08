@@ -10,12 +10,31 @@ use vapj\Desenvolvedor;
 use vapj\Http\Requests\CadastroJogoRequest;
 use vapj\Categoria;
 use JavaScript;
+use Image;
 class JogoController extends Controller
 {
 
 	//Mostra página com todos os jogos
-	public function index(){
-		$jogos = Jogo::paginate(20);
+	public function index(Request $request){
+		$jogos = new Jogo;
+
+		$query = $request->has('busca') ? $request->busca : '';
+		
+		$ordem = $request->has('ordem') ? $request->ordem : 'notaMedia';
+
+		$ascDesc = $ordem == "nomeJogo" ? 'asc' : 'desc';
+
+		$jogos = $jogos->where('nomeJogo', 'LIKE', "%$query%");
+
+		$jogos = $jogos->orderBy($ordem, $ascDesc);
+
+		$jogos = $jogos->orderBy('numCriticas', 'desc');
+
+		$jogos = $jogos->paginate(12)->appends([
+			'busca' => $request->busca,
+			'ordem' => $request->ordem
+		]);
+
 		return view ('jogo.index')->withJogos($jogos);
 	}
 
@@ -26,15 +45,20 @@ class JogoController extends Controller
 
 	//Cadastra o jogo com os parâmetros da requisição validados
 	public function store(CadastroJogoRequest $request){
+		if ($request->hasFile('imagemJogo')){
+			$imagemJogo = $request->file('imagemJogo');
+			$filename = time().'.'.$imagemJogo->getClientOriginalExtension();
+			Image::make($imagemJogo)->fit(600, 300)->save(public_path('images/jogos/'.$filename));
+		}
 		$jogo = Jogo::Create([
 				'nomeJogo' => $request->input('nomeJogo'),
 				'dataLancamento' => $request->input('dataLancamento'),
 				'descricao' => $request->input('descricao'),
 				'quantidadeJogadores' => $request->input('quantidadeJogadores'),
 				'idDistribuidora' => $request->input('distribuidora'),
-				'idDesenvolvedor' => $request->input('desenvolvedor')
-			]);
-		
+				'idDesenvolvedor' => $request->input('desenvolvedor'),
+				'imagemJogo'  => isset($filename) ? $filename : 'placeholder.png'
+ 			]);
 		//cadastra as categorias na tabela pivô
 		$jogo->categorias()->sync($request->categorias, false);
 
@@ -67,13 +91,28 @@ class JogoController extends Controller
 	}
 
 	//Mostra página de edição do jogo
-	public function edit(){
-		//
+	public function edit($nomeJogo){
+		$jogo = Jogo::where('nomeJogo', $nomeJogo)->firstOrFail();
+		return view("jogo.editar")->withJogo($jogo);
 	}
 
 	//Edita o jogo especificado no parâmetro do método
-	public function update(Request $request, $id){
-		//
+	public function update(Request $request, $nomeJogo){
+		$jogo = Jogo::where('nomeJogo', $nomeJogo)->firstOrFail();
+		$jogo->nomeJogo = $request->nomeJogo;
+		$jogo->descricao = $request->descricao;
+		$jogo->dataLancamento = $request->dataLancamento;
+		$jogo->idDistribuidora = $request->distribuidora;
+		$jogo->idDesenvolvedor = $request->desenvolvedor;
+		if ($request->hasFile('imagemJogo')){
+			$imagemJogo = $request->file('imagemJogo');
+			$filename = time().'.'.$imagemJogo->getClientOriginalExtension();
+			Image::make($imagemJogo)->fit(600, 300)->save(public_path('images/jogos/'.$filename));
+			$jogo->imagemJogo = $filename;
+		}
+		$jogo->save();
+		$jogo->categorias()->sync($request->categorias, false);
+		return redirect("/jogos/$nomeJogo");
 	}
 
 	//Deleta o jogo especificado no parâmetro do método

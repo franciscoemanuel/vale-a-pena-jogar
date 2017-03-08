@@ -8,7 +8,7 @@
 @if (!empty($errors->all()))
 	<div class="alert alert-danger">
 		<span aria-hidden="true" class="glyphicon glyphicon-exclamation-sign"></span>
-		<strong>Erro ao Editar.</strong>
+		<strong>Erro ao editar lista.</strong>
 	</div>
 @endif
 <div class="row">
@@ -37,7 +37,7 @@
 				<label for="jogos" class="control-label">Jogos: </label>
 				<select class="form-control select2JogosAjax" multiple="multiple" name="jogos[]" required>
 					@foreach($lista->jogos as $jogo)
-					<option value="{{$jogo->idJogo}}" selected>{{$jogo->nomeJogo}}</option>
+						<option value="{{$jogo->idJogo}}" selected>{{$jogo->nomeJogo}}</option>
 					@endforeach
 				</select>
 				@if ($errors->has('jogos'))

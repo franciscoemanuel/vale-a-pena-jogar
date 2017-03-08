@@ -17,9 +17,9 @@
 	</div>
 	<div class="col-md-6">
 		<h3>{{$usuario->nomeCompletoUsuario}}</h3>
-		<p><strong>Data de nascimento: </strong>{{$usuario->DataNascimentoUsuario}}</p>
+		<p><strong>Data de nascimento: </strong>{{$usuario->dataNascimentoUsuario}}</p>
 		<p><strong>E-mail: </strong>{{$usuario->emailUsuario}}</p>
-		<p><strong>Sexo: </strong>{{$usuario->sexo = "M" ? "Masculino" : "Feminino"}}</p>
+		<p><strong>Sexo: </strong>{{$usuario->sexo == "M" ? "Masculino" : "Feminino"}}</p>
 	</div>
 </div>
 <hr>
