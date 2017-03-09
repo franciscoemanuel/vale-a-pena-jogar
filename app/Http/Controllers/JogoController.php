@@ -40,7 +40,7 @@ class JogoController extends Controller
 
 	//Mostra a form de cadastro de jogos 
 	public function create(){
-		return view('jogo.cadastro');
+		return view('admin.jogos.cadastro');
 	}
 
 	//Cadastra o jogo com os parâmetros da requisição validados
@@ -62,7 +62,7 @@ class JogoController extends Controller
 		//cadastra as categorias na tabela pivô
 		$jogo->categorias()->sync($request->categorias, false);
 
-		return redirect('/jogos/cadastro');
+		return redirect(route('admin.jogos'));
 	}
 
 	//Mostra página do jogo especificado no parâmetro da função
@@ -93,7 +93,7 @@ class JogoController extends Controller
 	//Mostra página de edição do jogo
 	public function edit($nomeJogo){
 		$jogo = Jogo::where('nomeJogo', $nomeJogo)->firstOrFail();
-		return view("jogo.editar")->withJogo($jogo);
+		return view("admin.jogos.editar")->withJogo($jogo);
 	}
 
 	//Edita o jogo especificado no parâmetro do método
@@ -112,12 +112,14 @@ class JogoController extends Controller
 		}
 		$jogo->save();
 		$jogo->categorias()->sync($request->categorias, false);
-		return redirect("/jogos/$nomeJogo");
+		return redirect(route('admin.jogos'));
 	}
 
 	//Deleta o jogo especificado no parâmetro do método
 	public function destroy($id){
-		//
+		$jogo = Jogo::find($id);
+		$jogo->delete();
+		return response()->json([], 200);
 	}
 
 	/**
@@ -133,6 +135,31 @@ class JogoController extends Controller
 	        $json[] = array('id' => $jogo->idJogo, 'text' => $jogo->nomeJogo);
 	    }
 	    return response()->json($json);
+	}
+
+	/**
+	 * Retorna página de jogos do dashboard
+	 * @return [type] [description]
+	 */
+	public function adminIndex(Request $request){
+		$jogos = new Jogo;
+
+		$query = $request->has('busca') ? $request->busca : '';
+		
+		$ordem = $request->has('ordem') ? $request->ordem : 'notaMedia';
+
+		$ascDesc = $ordem == "nomeJogo" ? 'asc' : 'desc';
+
+		$jogos = $jogos->where('nomeJogo', 'LIKE', "%$query%");
+
+		$jogos = $jogos->orderBy($ordem, $ascDesc);
+
+		$jogos = $jogos->paginate(10)->appends([
+			'busca' => $request->busca,
+			'ordem' => $request->ordem
+		]);
+
+		return view('admin.jogos.index')->withJogos($jogos);
 	}
 
 

@@ -1,15 +1,15 @@
-@extends('layout.principal')
+@extends('layout.admin')
 
 
 @section('conteudo')
-	<div class="container">
+	<div>
 		@if (!empty($errors->all()))
 		<div class="alert alert-danger">
 			<span aria-hidden="true" class="glyphicon glyphicon-exclamation-sign"></span>
 			<strong>Erro ao realizar cadastro.</strong>
 		</div>
 		@endif
-		<form action={{url('/desenvolvedores/cadastro')}} method="POST">
+		<form action="{{route('desenvolvedor.cadastro.submit')}}" method="POST">
 			<input type="hidden" name="_token" value="{{csrf_token()}}" />
 			<div class="form-group{{ $errors->has('nomeDesenvolvedor') ? ' has-error' : '' }}">
 					<label for="nomeDesenvolvedor" class="control-label">Nome do desenvolvedor*</label>

@@ -45,6 +45,11 @@ return [
             'driver' => 'token',
             'provider' => 'users',
         ],
+
+        'admin' => [
+           'driver' => 'session',
+           'provider' => 'admins',
+        ],
     ],
 
     /*
@@ -68,6 +73,11 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => vapj\User::class,
+        ],
+
+        'admins' => [
+            'driver' => 'eloquent',
+            'model' => vapj\Admin::class,
         ],
 
         // 'users' => [

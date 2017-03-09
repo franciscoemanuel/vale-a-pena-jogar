@@ -1,25 +1,25 @@
-@extends('layout.principal')
+@extends('layout.admin')
 
 @section('conteudo')
 	<div class="container">
 		@if (!empty($errors->all()))
 		<div class="alert alert-danger">
 			<span aria-hidden="true" class="glyphicon glyphicon-exclamation-sign"></span>
-			<strong>Erro ao realizar cadastro.</strong>
+			<strong>Erro ao editar.</strong>
 		</div>
 		@endif
-		<form action={{url('/distribuidoras/cadastro')}} method="POST">
+		<form action="{{route('distribuidora.editar', $distribuidora->idDistribuidora)}}" method="POST">
 			<input type="hidden" name="_token" value="{{csrf_token()}}" />
 			<div class="form-group{{ $errors->has('nomeDistribuidora') ? ' has-error' : '' }}">
 					<label for="nomeDistribuidora" class="control-label">Nome da distribuidora*</label>
-					<input id="nomeDesenvolvedor" name="nomeDistribuidora" class="form-control" autofocus value="{{ old('nomeDistribuidora') }}" required maxlength="120" />
+					<input id="nomeDesenvolvedor" name="nomeDistribuidora" class="form-control" autofocus value="{{ $distribuidora->nomeDistribuidora }}" required maxlength="120" />
 					 @if ($errors->has('nomeDistribuidora'))
 		                <span class="help-block">
 		                    <strong>{{ $errors->first('nomeDistribuidora') }}</strong>
 		                </span>
 		            @endif
 			</div>
-			<input type="submit" class="btn btn-primary" value="Cadastrar">
+			<input type="submit" class="btn btn-primary" value="Editar">
 		</form>
 	</div>	
 @stop

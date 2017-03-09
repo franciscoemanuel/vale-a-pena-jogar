@@ -108,6 +108,28 @@ class UsuarioController extends Controller{
             "listas"   => $usuario->listas()->paginate(10, ['*'], 'pg_listas')
         ]);
     }
+
+    public function destroy($id){
+        $usuario = User::find($id);
+        $usuario->delete();
+        return response()->json([], 200);
+    }
+
+    public function adminIndex(Request $request){
+        $usuarios = new User;
+
+        $query = $request->has('busca') ? $request->busca : '';
+        
+        $usuarios = $usuarios->where('nomeUsuario', 'LIKE', "%$query%");
+
+        // $usuarios = $usuarios->orderBy($ordem, $ascDesc);
+
+        $usuarios = $usuarios->paginate(10)->appends([
+            'busca' => $request->busca,
+            // 'ordem' => $request->ordem
+        ]);
+        return view('admin.usuarios.index')->withUsuarios($usuarios);
+    }
 }
 
 ?>

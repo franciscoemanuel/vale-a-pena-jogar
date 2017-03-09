@@ -11,7 +11,7 @@ class CategoriaController extends Controller
 
 	//Mostra a view de cadastro de categorias
     public function create(){
-    	return view('categoria.cadastro');
+    	return view('admin.categorias.cadastro');
     }
     
     //Cadastra categoria com os parâmetros da requisição validados
@@ -19,21 +19,27 @@ class CategoriaController extends Controller
     	$categoria = Categoria::create([
     		'nomeCategoria' => $request->input('nomeCategoria')
     		]);
-    	return redirect('/categorias/cadastro');
+    	return redirect(route('admin.categorias'));
     }
 
-    public function edit(){
-        //
+    public function edit($id){
+        $categoria = Categoria::where('idCategoria', $id)->firstOrFail();
+        return view('admin.categorias.editar')->withCategoria($categoria);
     }
 
    
     public function update(Request $request, $id){
-        //
+        $categoria = Categoria::where('idCategoria', $id)->firstOrFail();
+        $categoria->nomeCategoria = $request->nomeCategoria;
+        $categoria->save();
+        return redirect(route('admin.categorias'));
     }
 
     
     public function destroy($id){
-        //
+        $categoria = Categoria::find($id);
+        $categoria->delete();
+        return response()->json([], 200);
     }
 
     public function buscaCategoriasJson(Request $request){
@@ -44,6 +50,22 @@ class CategoriaController extends Controller
             $json[] = array('id' => $categoria->idCategoria, 'text' => $categoria->nomeCategoria);
         }
         return response()->json($json);
+    }
+
+    public function adminIndex(Request $request){
+        $categorias = new Categoria;
+
+        $query = $request->has('busca') ? $request->busca : '';
+        
+        $categorias = $categorias->where('nomeCategoria', 'LIKE', "%$query%");
+
+        // $categorias = $categorias->orderBy($ordem, $ascDesc);
+
+        $categorias = $categorias->paginate(10)->appends([
+            'busca' => $request->busca,
+            // 'ordem' => $request->ordem
+        ]);
+        return view('admin.categorias.index')->withCategorias($categorias);
     }
 }
 

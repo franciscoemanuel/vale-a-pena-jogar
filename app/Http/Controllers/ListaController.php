@@ -174,4 +174,20 @@ class ListaController extends Controller
        $lista->save();
        return response()->json([""], 200);
     }
+
+    public function adminIndex(Request $request){
+        $listas = new Lista;
+
+        $query = $request->has('busca') ? $request->busca : '';
+        
+        $listas = $listas->where('nomeLista', 'LIKE', "%$query%");
+
+        // $listas = $listas->orderBy($ordem, $ascDesc);
+
+        $listas = $listas->paginate(10)->appends([
+            'busca' => $request->busca,
+            // 'ordem' => $request->ordem
+        ]);
+        return view('admin.listas.index')->withListas($listas);
+    }
 }

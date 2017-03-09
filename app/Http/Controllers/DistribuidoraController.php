@@ -10,7 +10,7 @@ class DistribuidoraController extends Controller
 {
 	//Mostra a view de cadastro de distribuidoras
     public function create(){
-    	return view('distribuidora.cadastro');
+    	return view('admin.distribuidoras.cadastro');
     }
 
     //Cadastra distribuidora com os parâmetros da requisição validados
@@ -18,21 +18,27 @@ class DistribuidoraController extends Controller
     	$distribuidora = Distribuidora::create([
     			'nomeDistribuidora' => $request->input('nomeDistribuidora')
     		]); 
-    	return redirect('/distribuidoras/cadastro');
+    	return redirect(route('admin.distribuidoras'));
     }
 
-    public function edit(){
-        //
+    public function edit($id){
+        $distribuidora = Distribuidora::where('idDistribuidora', $id)->firstOrFail();
+        return view('admin.distribuidoras.editar')->withDistribuidora($distribuidora);
     }
 
     
     public function update(Request $request, $id){
-        //
+        $distribuidora = Distribuidora::where('idDistribuidora', $id)->firstOrFail();
+        $distribuidora->nomeDistribuidora = $request->nomeDistribuidora;
+        $distribuidora->save();
+        return redirect(route('admin.distribuidoras'));
     }
 
     
     public function destroy($id){
-        //
+        $distribuidora = Distribuidora::find($id);
+        $distribuidora->delete();
+        return response()->json([], 200);
     }
 
     public function buscaDistribuidorasJson(Request $request){
@@ -43,5 +49,21 @@ class DistribuidoraController extends Controller
             $json[] = array('id' => $distribuidora->idDistribuidora, 'text' => $distribuidora->nomeDistribuidora);
         }
         return response()->json($json);
+    }
+
+    public function adminIndex(Request $request){
+        $distribuidoras = new Distribuidora;
+
+        $query = $request->has('busca') ? $request->busca : '';
+        
+        $distribuidoras = $distribuidoras->where('nomeDistribuidora', 'LIKE', "%$query%");
+
+        // $distribuidoras = $distribuidoras->orderBy($ordem, $ascDesc);
+
+        $distribuidoras = $distribuidoras->paginate(10)->appends([
+            'busca' => $request->busca,
+            // 'ordem' => $request->ordem
+        ]);
+        return view('admin.distribuidoras.index')->withDistribuidoras($distribuidoras);
     }
 }
