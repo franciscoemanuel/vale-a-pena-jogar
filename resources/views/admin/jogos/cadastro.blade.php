@@ -64,7 +64,7 @@
 		<div class="form-group{{ $errors->has('categorias') ? ' has-error' : '' }}">
 			<label for="categorias" class="control-label">Categorias</label>
 			<a title="Nova categoria" target="_blank" href="{{route('categoria.cadastro')}}"><i class="fa fa-plus-circle"></i></a>
-			<select class="form-control select2CategoriaAjax" name="categorias[]" multiple="multiple" required value="{{old('categorias')}}">
+			<select class="form-control select2CategoriaAjax" name="categorias[]" multiple="multiple" required>
 				<option></option>
 			</select>
 			@if ($errors->has('categorias'))

@@ -21,7 +21,7 @@
             <li {{ Request::is('/') ? 'class = active ' : null }} ><a href="/"><span class="glyphicon glyphicon-home"></span> Início <span class="sr-only">(current)</span></a></li>
             <li {{ Request::is('jogos') ? 'class = active ' : null }} ><a href="/jogos"><i class="fa fa-gamepad"></i> Jogos</a></li>
             <li {{ Request::is('listas') ? 'class = active ' : null }} ><a href="/listas"><span class="glyphicon glyphicon-th-list"></span> Listas</a></li>
-            <!-- <li {{ Request::is('usuarios') ? 'class = active ' : null }} ><a href="/usuarios"><i class="glyphicon glyphicon-user"></i> Usuários</a></li> -->
+            <li {{ Request::is('usuarios') ? 'class = active ' : null }} ><a href="/usuarios"><i class="glyphicon glyphicon-user"></i> Usuários</a></li>
         </ul>
         <!-- Right Side Of Navbar -->
         <div>
@@ -35,7 +35,7 @@
                 <!-- <span class="glyphicon glyphicon-log-in"></span> -->  Cadastre-se </a></li>
             <!--     <li><a href="#" data-toggle="modal" data-target="#registerModal">Cadastro</a></li> -->
                 @else
-                <li class="dropdown col-xs-pull-2">
+                <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                         {{ Auth::user()->nomeUsuario }} <span class="caret"></span>
                     </a>

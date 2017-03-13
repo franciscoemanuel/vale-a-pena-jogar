@@ -8,9 +8,11 @@ use vapj\Jogo;
 use vapj\Distribuidora;
 use vapj\Desenvolvedor;
 use vapj\Http\Requests\CadastroJogoRequest;
+use vapj\Http\Requests\EditarJogoRequest;
 use vapj\Categoria;
 use JavaScript;
 use Image;
+use Storage;
 class JogoController extends Controller
 {
 
@@ -97,7 +99,7 @@ class JogoController extends Controller
 	}
 
 	//Edita o jogo especificado no parâmetro do método
-	public function update(Request $request, $nomeJogo){
+	public function update(EditarJogoRequest $request, $nomeJogo){
 		$jogo = Jogo::where('nomeJogo', $nomeJogo)->firstOrFail();
 		$jogo->nomeJogo = $request->nomeJogo;
 		$jogo->descricao = $request->descricao;
@@ -108,7 +110,9 @@ class JogoController extends Controller
 			$imagemJogo = $request->file('imagemJogo');
 			$filename = time().'.'.$imagemJogo->getClientOriginalExtension();
 			Image::make($imagemJogo)->fit(600, 300)->save(public_path('images/jogos/'.$filename));
+			$imagemAntiga = $jogo->imagemJogo;
 			$jogo->imagemJogo = $filename;
+			Storage::disk('jogos')->delete($imagemAntiga);
 		}
 		$jogo->save();
 		$jogo->categorias()->sync($request->categorias, false);
@@ -118,6 +122,7 @@ class JogoController extends Controller
 	//Deleta o jogo especificado no parâmetro do método
 	public function destroy($id){
 		$jogo = Jogo::find($id);
+		Storage::disk('jogos')->delete($jogo->imagemJogo);
 		$jogo->delete();
 		return response()->json([], 200);
 	}

@@ -29,13 +29,17 @@
 <table class="table table-striped">
     <tr>
     	<th>ID</th>
-        <th>Lista</th>
+        <th>Nome</th>
+        <th>Descrição</th>
+        <th>Usuário</th>
         <th></th>
     </tr>
     @foreach($listas as $lista)
     <tr>
     	<td>{{$lista->idLista}}</td>
         <td>{{$lista->nomeLista}}</td>
+        <td>{{str_limit($lista->descricaoLista, 100)}}</td>
+        <td>{{$lista->usuario->nomeUsuario}}</td>
         <td>
             <a href="#" data-toggle="confirmation" data-url="{{route('admin.lista.excluir', $lista->idLista)}}"><i class="fa fa-trash-o"></i></a>
         </td>

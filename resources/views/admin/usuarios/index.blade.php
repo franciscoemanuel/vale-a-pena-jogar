@@ -43,6 +43,7 @@
         <td>{{$usuario->sexo}}</td>
         <td>{{$usuario->dataNascimentoUsuario}}</td>
         <td>
+            <a href="{{route('usuario.editar', $usuario->nomeUsuario)}}"><i class="fa fa-pencil"></i></a>
             <a href="#" data-toggle="confirmation" data-url="{{route('usuario.excluir', $usuario->idUsuario)}}"><i class="fa fa-trash-o"></i></a>
         </td>
     </tr>

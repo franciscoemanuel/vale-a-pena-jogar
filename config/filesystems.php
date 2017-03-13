@@ -62,6 +62,11 @@ return [
             'bucket' => 'your-bucket',
         ],
 
+        'jogos' => [
+            'driver' => 'local',
+            'root' => public_path('images/jogos'),
+        ],
+
     ],
 
 ];

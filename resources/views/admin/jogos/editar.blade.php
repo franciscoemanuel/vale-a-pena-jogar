@@ -63,8 +63,8 @@
 		</div>
 		<div class="form-group{{ $errors->has('categorias') ? ' has-error' : '' }}">
 			<label for="categorias" class="control-label">Categorias</label>
-			<a title="Nova categoria" target="_blank" href={{url('/categorias/cadastro')}}><i class="fa fa-plus-circle"></i></a>
-			<select class="form-control select2CategoriaAjax" name="categorias[]" multiple="multiple" required value="{{old('categorias')}}">
+			<a title="Nova categoria" target="_blank" href="{{route('categoria.cadastro')}}"><i class="fa fa-plus-circle"></i></a>
+			<select class="form-control select2CategoriaAjax" name="categorias[]" multiple="multiple" required>
 				@foreach($jogo->categorias as $categoria)
 					<option value="{{$categoria->idCategoria}}" selected>{{$categoria->nomeCategoria}}</option>
 				@endforeach
@@ -77,7 +77,7 @@
 		</div>
 		<div class="form-group{{ $errors->has('distribuidora') ? ' has-error' : '' }}">
 			<label for="distribuidora" class="control-label">Distribuidora do jogo</label>
-			<a title="Nova distribuidora" target="_blank" href={{url('/distribuidoras/cadastro')}}><i class="fa fa-plus-circle"></i></a>
+			<a title="Nova distribuidora" target="_blank" href="{{route('distribuidora.cadastro')}}"><i class="fa fa-plus-circle"></i></a>
 			<select class="form-control select2DistribuidoraAjax" name="distribuidora" required>
 					<option value="{{$jogo->distribuidora->idDistribuidora}}" selected>{{$jogo->distribuidora->nomeDistribuidora}}</option>
 			</select>
@@ -90,7 +90,7 @@
 
 		<div class="form-group{{ $errors->has('desenvolvedor') ? ' has-error' : '' }}">
 			<label for="desenvolvedor" class="control-label">Desenvolvedor</label>
-			<a title="Novo desenvolvedor" target="_blank" href={{url('/desenvolvedores/cadastro')}}><i class="fa fa-plus-circle"></i></a>
+			<a title="Novo desenvolvedor" target="_blank" href="{{route('desenvolvedor.cadastro')}}"><i class="fa fa-plus-circle"></i></a>
 			<select class="form-control select2DesenvolvedorAjax" name="desenvolvedor" required>
 				<option value="{{$jogo->desenvolvedor->idDesenvolvedor}}" selected>{{$jogo->desenvolvedor->nomeDesenvolvedor}}</option>
 			</select>
@@ -101,13 +101,19 @@
 			@endif
 		</div>
 
-		<div class="form-group">
-			<label for="imagem">Imagem: </label>
+		<div class="form-group {{ $errors->has('imagemJogo') ? ' has-error' : '' }}">
+			<label for="imagem" class="control-label">Imagem: </label>
 			<input type="file" name="imagemJogo">
+			@if ($errors->has('imagemJogo'))
+			<span class="help-block">
+				<strong>{{ $errors->first('imagemJogo') }}</strong>
+			</span>
+			@endif
 		</div>
-
-		<button class="btn btn-primary" type="submit">Cadastrar</button>
+		<input type="hidden" name="idJogo" value="{{$jogo->idJogo}}">
+		<button class="btn btn-primary" type="submit">Editar</button>
 	</form>
+	</br>
 </div>
 @stop
 

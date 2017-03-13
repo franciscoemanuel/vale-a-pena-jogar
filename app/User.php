@@ -92,4 +92,22 @@ class User extends Authenticatable
       $date = \Carbon\Carbon::parse($this->attributes['dataNascimentoUsuario'])->format('d/m/Y');
       return $date;
     }
+
+    /**
+     * Retorna idade do usuário
+     * @return int
+     */
+    public function getIdadeAttribute(){
+        $idade = \Carbon\Carbon::parse($this->attributes['dataNascimentoUsuario'])->age;
+        return $idade;
+    }
+
+    /**
+     * Retorna sexo formatado
+     * @return String
+     */
+    public function getSexoFormatadoAttribute(){
+        $sexo = $this->attributes['sexo'] == 'M' ? 'Masculino' : 'Feminino';
+        return $sexo; 
+    }
 }

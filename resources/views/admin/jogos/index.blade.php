@@ -41,7 +41,7 @@
 
 <div class="col-xs-4">
 <a href="{{route('jogo.cadastro')}}" class="btn btn-primary pull-right">
-    Novo jogo <i class="glyphicon glyphicon-plus"></i>
+    Novo <i class="glyphicon glyphicon-plus"></i>
 </a> 
 </div>
 <table class="table table-striped">

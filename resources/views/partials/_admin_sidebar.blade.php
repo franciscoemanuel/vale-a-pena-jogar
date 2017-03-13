@@ -50,9 +50,8 @@
 
             <li {{ Request::is('admin/jogos') ? 'class = active ' : null }}><a href="{{route('admin.jogos')}}"><span class="fa fa-gamepad"></span> Jogos</a></li>
             <li {{ Request::is('admin/desenvolvedores') ? 'class = active ' : null }}><a href="{{route('admin.desenvolvedores')}}"><span class="fa fa-code"></span> Desenvolvedores</a></li>
-            <li {{ Request::is('admin/distribuidoras') ? 'class = active ' : null }}><a href="{{route('admin.distribuidoras')}}"><span class="fa fa-usd"></span> Distribuidoras</a></li>
+            <li {{ Request::is('admin/distribuidoras') ? 'class = active ' : null }}><a href="{{route('admin.distribuidoras')}}"><i class="fa fa-truck"></i> Distribuidoras</a></li>
             <li {{ Request::is('admin/categorias') ? 'class = active ' : null }}><a href="{{route('admin.categorias')}}"><span class="fa fa-tags"></span> Categorias</a></li>
-            <li {{ Request::is('admin/listas') ? 'class = active ' : null }}><a href="{{route('admin.listas')}}"><span class="fa fa-list-ol"></span> Listas</a></li>
             <li {{ Request::is('admin/usuarios') ? 'class = active ' : null }}><a href="{{route('admin.usuarios')}}"><span class="fa fa-users"></span> Usuarios</a></li>
             <li><a href="{{route('admin.logout')}}"><span class="glyphicon glyphicon-log-out"></span> Sair</a></li>
 

@@ -21,6 +21,8 @@ Route::get('/usuarios/{usuario}', 'UsuarioController@show')->name('usuario');
 
 Route::get('/usuarios/{usuario}/jogos', 'UsuarioController@jogos')->name('jogos_usuario');
 
+Route::get('/usuarios', 'UsuarioController@index')->name('usuarios');
+
 /*Rotas declaradas para o controller de jogos*/
 
 Route::get('/jogos', 'JogoController@index')->name('jogos.index');
@@ -97,68 +99,77 @@ Route::delete("/comentarios/{id}", "ComentarioController@destroy")->name("exclui
 
 //Rotas para admin
 
-Route::get('/admin/login', 'Auth\AdminLoginController@getLoginForm')->name('admin.login');
+Route::group(['prefix' => 'admin', 'namespace' => 'Auth'], function(){
 
-Route::post('/admin/login', 'Auth\AdminLoginController@postLoginForm')->name('admin.login.submit');
+	Route::get('login', 'AdminLoginController@getLoginForm')->name('admin.login');
 
-Route::get('/admin/logout', 'Auth\AdminLoginController@logout')->name('admin.logout');
+	Route::post('login', 'AdminLoginController@postLoginForm')->name('admin.login.submit');
 
-Route::get('/admin', 'AdminController@index')->name('admin.dashboard');	
+	Route::get('logout', 'AdminLoginController@logout')->name('admin.logout');
 
-Route::get('/admin/jogos', 'JogoController@adminIndex')->name('admin.jogos')->middleware('auth:admin');
+});
 
-Route::get('/admin/jogos/cadastro', 'JogoController@create')->name('jogo.cadastro')->middleware('auth:admin');
+Route::group(['prefix' => 'admin', 'middleware' => 'auth:admin'], function(){
+	
+	Route::get('/', 'AdminController@index')->name('admin.dashboard');	
 
-Route::post('/admin/jogos/cadastro', 'JogoController@store')->name('jogo.cadastro.submit')->middleware('auth:admin');
+	//Jogos
+	Route::get('jogos', 'JogoController@adminIndex')->name('admin.jogos');
 
-Route::get('/admin/jogos/editar/{nomeJogo}', 'JogoController@edit')->name('jogo.editar')->middleware('auth:admin');
+	Route::get('jogos/cadastro', 'JogoController@create')->name('jogo.cadastro');
 
-Route::post('/admin/jogos/editar/{nomeJogo}', 'JogoController@update')->name('jogo.editar.submit')->middleware('auth:admin');
+	Route::post('jogos/cadastro', 'JogoController@store')->name('jogo.cadastro.submit');
 
-Route::delete('/admin/jogos/excluir/{id}', 'JogoController@destroy')->name('jogo.excluir')->middleware('auth:admin');
-//Desenvolvedores
-Route::get('/admin/desenvolvedores', 'DesenvolvedorController@adminIndex')->name('admin.desenvolvedores')->middleware('auth:admin');
+	Route::get('jogos/editar/{nomeJogo}', 'JogoController@edit')->name('jogo.editar');
 
-Route::get('/admin/desenvolvedores/cadastro', 'DesenvolvedorController@create')->name('desenvolvedor.cadastro')->middleware('auth:admin');
+	Route::post('jogos/editar/{nomeJogo}', 'JogoController@update')->name('jogo.editar.submit');
 
-Route::post('/admin/desenvolvedores/cadastro', 'DesenvolvedorController@store')->name('desenvolvedor.cadastro.submit')->middleware('auth:admin');
+	Route::delete('jogos/excluir/{id}', 'JogoController@destroy')->name('jogo.excluir');
+	//Desenvolvedores
+	Route::get('desenvolvedores', 'DesenvolvedorController@adminIndex')->name('admin.desenvolvedores');
 
-Route::get('/admin/desenvolvedores/editar/{id}', 'DesenvolvedorController@edit')->name('desenvolvedor.editar')->middleware('auth:admin');
+	Route::get('desenvolvedores/cadastro', 'DesenvolvedorController@create')->name('desenvolvedor.cadastro');
 
-Route::post('/admin/desenvolvedores/editar/{id}', 'DesenvolvedorController@update')->name('desenvolvedor.editar.submit')->middleware('auth:admin');
+	Route::post('desenvolvedores/cadastro', 'DesenvolvedorController@store')->name('desenvolvedor.cadastro.submit');
 
-Route::delete('/admin/desenvolvedores/excluir/{id}', 'DesenvolvedorController@destroy')->name('desenvolvedor.excluir')->middleware('auth:admin');
+	Route::get('desenvolvedores/editar/{id}', 'DesenvolvedorController@edit')->name('desenvolvedor.editar');
 
-//Distribuidoras
-Route::get('/admin/distribuidoras', 'DistribuidoraController@adminIndex')->name('admin.distribuidoras')->middleware('auth:admin');
+	Route::post('desenvolvedores/editar/{id}', 'DesenvolvedorController@update')->name('desenvolvedor.editar.submit');
 
-Route::get('/admin/distribuidoras/cadastro', 'DistribuidoraController@create')->name('distribuidora.cadastro')->middleware('auth:admin');
+	Route::delete('desenvolvedores/excluir/{id}', 'DesenvolvedorController@destroy')->name('desenvolvedor.excluir');
 
-Route::post('/admin/distribuidoras/cadastro', 'DistribuidoraController@store')->name('distribuidora.cadastro.submit')->middleware('auth:admin');
+	//Distribuidoras
+	Route::get('distribuidoras', 'DistribuidoraController@adminIndex')->name('admin.distribuidoras');
 
-Route::get('/admin/distribuidoras/editar/{id}', 'DistribuidoraController@edit')->name('distribuidora.editar')->middleware('auth:admin');
+	Route::get('distribuidoras/cadastro', 'DistribuidoraController@create')->name('distribuidora.cadastro');
 
-Route::post('/admin/distribuidoras/editar/{id}', 'DistribuidoraController@update')->name('distribuidora.editar.submit')->middleware('auth:admin');
+	Route::post('distribuidoras/cadastro', 'DistribuidoraController@store')->name('distribuidora.cadastro.submit');
 
-Route::delete('/admin/distribuidoras/excluir/{id}', 'DistribuidoraController@destroy')->name('distribuidora.excluir')->middleware('auth:admin');
-//Categorias
-Route::get('/admin/categorias', 'CategoriaController@adminIndex')->name('admin.categorias')->middleware('auth:admin');
+	Route::get('distribuidoras/editar/{id}', 'DistribuidoraController@edit')->name('distribuidora.editar');
 
-Route::get('/admin/categorias/cadastro', 'CategoriaController@create')->name('categoria.cadastro')->middleware('auth:admin');
+	Route::post('distribuidoras/editar/{id}', 'DistribuidoraController@update')->name('distribuidora.editar.submit');
 
-Route::post('/admin/categorias/cadastro', 'CategoriaController@store')->name('categoria.cadastro.submit')->middleware('auth:admin');
+	Route::delete('distribuidoras/excluir/{id}', 'DistribuidoraController@destroy')->name('distribuidora.excluir');
 
-Route::get('/admin/categorias/editar/{id}', 'CategoriaController@edit')->name('categoria.editar')->middleware('auth:admin');
+	//Categorias
+	Route::get('categorias', 'CategoriaController@adminIndex')->name('admin.categorias');
 
-Route::post('/admin/categorias/editar/{id}', 'CategoriaController@update')->name('categoria.editar.submit')->middleware('auth:admin');
+	Route::get('categorias/cadastro', 'CategoriaController@create')->name('categoria.cadastro');
 
-Route::delete('/admin/categorias/excluir/{id}', 'CategoriaController@destroy')->name('categoria.excluir')->middleware('auth:admin');
-//Listas
-Route::get('/admin/listas', 'ListaController@adminIndex')->name('admin.listas')->middleware('auth:admin');
+	Route::post('categorias/cadastro', 'CategoriaController@store')->name('categoria.cadastro.submit');
 
-Route::delete('/admin/listas/excluir/{id}', 'ListaController@destroy')->name('admin.lista.excluir')->middleware('auth:admin');
+	Route::get('categorias/editar/{id}', 'CategoriaController@edit')->name('categoria.editar');
 
-//Usuarios
-Route::get('/admin/usuarios', 'UsuarioController@adminIndex')->name('admin.usuarios')->middleware('auth:admin');
+	Route::post('categorias/editar/{id}', 'CategoriaController@update')->name('categoria.editar.submit');
 
-Route::delete('/admin/usuarios/excluir/{id}', 'UsuarioController@destroy')->name('usuario.excluir')->middleware('auth:admin');
+	Route::delete('categorias/excluir/{id}', 'CategoriaController@destroy')->name('categoria.excluir');
+
+	//Usuarios
+	Route::get('usuarios', 'UsuarioController@adminIndex')->name('admin.usuarios');
+
+	Route::get('usuarios/editar/{usuario}', 'UsuarioController@edit')->name('usuario.editar');
+
+	Route::post('usuarios/editar/{usuario}', 'UsuarioController@update')->name('usuario.editar.submit');
+
+	Route::delete('usuarios/excluir/{id}', 'UsuarioController@destroy')->name('usuario.excluir');
+});

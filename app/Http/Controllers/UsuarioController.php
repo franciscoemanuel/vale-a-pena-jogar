@@ -3,6 +3,7 @@ namespace vapj\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;	
 use vapj\Http\Requests\CadastroUsuarioRequest;
+use vapj\Http\Requests\EditarUsuarioRequest;
 use vapj\User;
 use vapj\Http\Requests;
 use Auth;
@@ -130,6 +131,58 @@ class UsuarioController extends Controller{
         ]);
         return view('admin.usuarios.index')->withUsuarios($usuarios);
     }
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($usuario)
+    {
+        $usuario = User::where('nomeUsuario', $usuario)->firstOrFail();
+        return view('admin.usuarios.editar')->withUsuario($usuario);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(EditarUsuarioRequest $request, $usuario)
+    {
+        $usuario = User::where('nomeUsuario', $usuario)->firstOrFail();
+        $usuario->nomeCompletoUsuario = $request->nomeCompletoUsuario;
+        $usuario->sexo = $request->sexo;
+        $usuario->nomeUsuario = $request->nomeUsuario;
+        $usuario->emailUsuario = $request->emailUsuario;
+        $usuario->dataNascimentoUsuario = $request->dataNascimentoUsuario;
+        $usuario->save();
+        return redirect(route('admin.usuarios'));
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index(Request $request)
+    {
+        $usuarios = new User;
+
+        $query = $request->has('busca') ? $request->busca : '';
+
+        $usuarios = $usuarios->where('nomeUsuario', 'LIKE', "%$query%");
+
+        $usuarios = $usuarios->paginate(10)->appends([
+            'busca' => $request->busca,
+            'ordem' => $request->ordem
+        ]);
+
+        return view('usuario.index')->withUsuarios($usuarios);
+    }
+
 }
 
 ?>
