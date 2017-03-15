@@ -9,7 +9,7 @@
 		<div class="panel panel-default comentarios">
 			<div class="panel-heading">
 				<a href="/usuarios/{{$critica->usuario->nomeUsuario}}"> <strong>{{$critica->usuario->nomeUsuario}}</strong> </a>
-				<small>{{$critica->dataCriacao}}</small>
+				<a href="{{route('jogos.single', $critica->jogo->nomeJogo)}}"><small>{{$critica->dataCriacao}}</small></a>
 				<span class="notaCritica">
 					<i class="fa fa-star"></i> 
 					{{$critica->nota ? $critica->nota : 0}}/

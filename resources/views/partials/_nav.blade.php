@@ -45,6 +45,9 @@
                             <a href="/usuarios/{{Auth::user()->nomeUsuario}}">Meu perfil</a>
                         </li>
                         <li>
+                            <a href="{{route('usuario.dados')}}">Meus dados</a>
+                        </li>
+                        <li>
                             <a href="{{ url('/logout') }}"
                             onclick="event.preventDefault();
                             document.getElementById('logout-form').submit();">

@@ -1,4 +1,4 @@
-@extends('layout.admin')
+@extends('layout.principal')
 
 @section('styles')
 	<link rel="stylesheet" type="text/css" href="{{asset('css/jquery-ui.min.css')}}">
@@ -11,9 +11,15 @@
 				<strong>Erro ao editar usuário.</strong>
 			</div>
 		@endif
+		@if (Session::has('sucesso'))
+			<div class="alert alert-success">
+				<span aria-hidden="true" class="glyphicon glyphicon-ok"></span>
+				<strong>Sucesso - </strong> {{ Session::get('sucesso') }}
+			</div>
+		@endif
 		<div class="row">
 			<div class="col-md-8 col-md-offset-2">
-				<form action="{{route('usuario.editar.submit', $usuario->nomeUsuario)}}" method="post">
+				<form action="{{route('usuario.dados.submit', $usuario->nomeUsuario)}}" method="post">
 					<input type="hidden" name="_token" value="{{csrf_token()}}" />
 					<div class="form-group{{ $errors->has('nomeCompletoUsuario') ? ' has-error' : '' }}">
 						<label for="nomeCompletoUsuario" class="control-label">Nome Completo</label>
@@ -47,7 +53,7 @@
 
 					<div class="form-group{{ $errors->has('nomeUsuario') ? ' has-error' : '' }}">
 						<label for="nomeUsuario" class="control-label">Usuário</label>
-						<input id="nomeUsuario" name="nomeUsuario" class="form-control" value="{{ old('nomeUsuario') ? old('nomeUsuario') : $usuario->nomeUsuario}}" required maxlength="40" />
+						<input id="nomeUsuario" readonly name="nomeUsuario" class="form-control" value="{{ old('nomeUsuario') ? old('nomeUsuario') : $usuario->nomeUsuario}}" required maxlength="40" />
 						 @if ($errors->has('nomeUsuario'))
 			                <span class="help-block">
 			                    <strong>{{ $errors->first('nomeUsuario') }}</strong>

@@ -3,16 +3,17 @@
 @section('styles')
 <link rel="stylesheet" type="text/css" href="{{asset('css/jogos.css')}}">
 <link rel="stylesheet" type="text/css" href="{{asset('css/_listas.css')}}">
+
 @stop
 
 
 @section('conteudo')
 <div class="jogos">
 <span class="titulo">Jogos</span>
+<small><a href="{{route('jogos.index')}}">Ver todos</a></small>
   <div class="row section">
       <div class="col-xs-10">
           <span class="subTitulo">Melhor avaliados</span>
-          <small><a href="{{route('jogos.index', ['ordem' => 'notaMedia'])}}">Ver todos</a></small>
       </div>
       @foreach($jogosMelhorAvaliados as $jogo)
       <div class="col-lg-3 col-md-4 col-sm-6">
@@ -43,7 +44,6 @@
   <div class="row section">
       <div class="col-xs-10">
           <span class="subTitulo">Lançados recentemente</span>
-          <small><a href="#">Ver todos</a></small>
       </div>
       @foreach($jogosLancadosRecentemente as $jogo)
       <div class="col-lg-3 col-md-4 col-sm-6">
@@ -74,7 +74,6 @@
   <div class="row section">
       <div class="col-xs-10">
           <span class="subTitulo">Em breve</span>
-          <small><a href="#">Ver todos</a></small>
       </div>
       @foreach($jogosEmBreve as $jogo)
       <div class="col-lg-3 col-md-4 col-sm-6">
@@ -105,10 +104,10 @@
 </div>  
 <hr>
 <span class="titulo">Listas</span>
+<small><a href="{{route('listas.index')}}">Ver todos</a></small>
 <div class="row section">
     <div class="col-xs-10">
         <span class="subTitulo">Melhor avaliadas</span>
-        <small><a href="#">Ver todos</a></small>
     </div>
     @foreach($listasMelhorAvaliadas as $lista)
     <div class="col-xs-12">
@@ -140,7 +139,6 @@
 <div class="row section">
     <div class="col-xs-10">
         <span class="subTitulo">Mais comentadas</span>
-        <small><a href="#">Ver todos</a></small>
     </div>
     @foreach($listasMaisComentadas as $lista)
     <div class="col-xs-12">

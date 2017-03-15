@@ -107,7 +107,14 @@ class User extends Authenticatable
      * @return String
      */
     public function getSexoFormatadoAttribute(){
-        $sexo = $this->attributes['sexo'] == 'M' ? 'Masculino' : 'Feminino';
-        return $sexo; 
+        $sexo = $this->attributes['sexo'];
+        switch ($sexo) {
+            case 'M':
+                return 'Masculino';
+            case 'F':
+                return 'Feminino';    
+            default:
+                return 'Indefinido';
+        }
     }
 }

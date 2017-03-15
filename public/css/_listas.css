@@ -11,3 +11,6 @@
 	border-radius: 10px;
 	background-color: #fff;
 }
+.section-box p{
+	word-break: break-all;
+}

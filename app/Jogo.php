@@ -54,4 +54,9 @@ class Jogo extends Model
 		$date = \Carbon\Carbon::parse($this->attributes['dataLancamento'])->format('d/m/Y');
 		return $date;
 	}
+
+	//Retorna nota média com uma casa depois da virgula
+	public function getNotaMediaAttribute(){
+		return number_format($this->attributes['notaMedia'], 1);
+	}
 }

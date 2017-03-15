@@ -7,11 +7,20 @@
 .comentarios .thumbnail{
 	padding: 0px;
 }
+.well-sm{
+	-webkit-border-radius: 20px;
+	-moz-border-radius: 20px;
+	border-radius: 10px;
+	background-color: #fff;
+}
+p{
+	word-break: break-all;
+}
 </style>
 @stop
 
 @section('conteudo')
-<div class="page-header">
+<div class="well well-sm">
 	@if ($lista->usuario == \Auth::User())
 	<div class="row">
 		<div class="col-md-6">

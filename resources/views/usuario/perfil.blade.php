@@ -7,11 +7,16 @@
 <link rel="stylesheet" type="text/css" href="{{asset('css/jogos.css')}}">
 <link rel="stylesheet" type="text/css" href="{{asset('css/_criticas.css')}}">
 <link rel="stylesheet" type="text/css" href="{{asset('css/_listas.css')}}">
+<style type="text/css">
+li.active>a{
+	background-color: #e5e7ea !important;	
+}
+</style>
 @stop
 
 @section('conteudo')
 <!--Conteúdo-->
-<div class="row">
+<div class="row well well-sm">
 	<div class="col-md-2">
 		<img class="img-thumbnail" src="{{asset('images/avatar.png')}}">
 	</div>
@@ -22,10 +27,9 @@
 		<p><strong>Sexo: </strong>{{$usuario->sexoFormatado}}</p>
 	</div>
 </div>
-<hr>
 <div class="row">
 	<div class="col-md-12">
-		<ul class="nav nav-tabs nav-justified">
+		<ul class="nav nav-tabs nav-justified well-sm">
 		  <li class="active">
 		  	  <a class="btn-abas" href="#"><i class="fa fa-gamepad"></i> <strong>Jogos</strong> <span class="badge">{{$usuario->jogos->count()}}</span></a>
 		  </li>

@@ -115,7 +115,7 @@ class ListaController extends Controller
        $lista = \vapj\lista::where('idLista', $id)->firstOrFail();
        $lista->nomeLista = $request->nomeLista;
        $lista->descricaoLista = $request->descricaoLista;
-       $lista->jogos()->sync($request->jogos, false);
+       $lista->jogos()->sync($request->jogos, true);
        $lista->qtdJogos = sizeof($request->jogos);
        $lista->save();
        $id = $lista->idLista;

@@ -23,6 +23,10 @@ Route::get('/usuarios/{usuario}/jogos', 'UsuarioController@jogos')->name('jogos_
 
 Route::get('/usuarios', 'UsuarioController@index')->name('usuarios');
 
+Route::get('/meus-dados', 'UsuarioController@dadosUsuario')->name('usuario.dados')->middleware('auth');
+
+Route::post('/meus-dados', 'UsuarioController@postDadosUsuario')->name('usuario.dados.submit')->middleware('auth');
+
 /*Rotas declaradas para o controller de jogos*/
 
 Route::get('/jogos', 'JogoController@index')->name('jogos.index');
@@ -75,7 +79,7 @@ Route::delete('/critica/{id}', [
 
 
 //Rotas para listas
-Route::get("/listas", "ListaController@index");
+Route::get("/listas", "ListaController@index")->name('listas.index');
 
 Route::get("/listas/nova-lista", "ListaController@create")->name("novaLista")->middleware('auth');
 

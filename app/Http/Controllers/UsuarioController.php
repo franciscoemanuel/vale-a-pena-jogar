@@ -183,6 +183,29 @@ class UsuarioController extends Controller{
         return view('usuario.index')->withUsuarios($usuarios);
     }
 
+    /**
+     * Mostra o form para editar dados do usuário
+     * @return \Illuminate\Http\Response
+     */
+    public function dadosUsuario(Request $request){
+        $usuario = $request->user();
+        return view('usuario.dados')->withUsuario($usuario);
+    }
+
+    /**
+     * Mostra o form para editar dados do usuário
+     * @return \Illuminate\Http\Response
+     */
+    public function postDadosUsuario(EditarUsuarioRequest $request){
+        $usuario = $request->user();
+        $usuario->nomeCompletoUsuario = $request->nomeCompletoUsuario;
+        $usuario->sexo = $request->sexo;
+        $usuario->emailUsuario = $request->emailUsuario;
+        $usuario->dataNascimentoUsuario = $request->dataNascimentoUsuario;
+        $usuario->save();
+        \Session::flash('sucesso', 'Dados alterados com sucesso!');
+        return redirect(route('usuario.dados'));
+    }
 }
 
 ?>
