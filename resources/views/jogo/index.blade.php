@@ -11,6 +11,9 @@
 
 @section('conteudo')
 <!--Todos os jogos-->
+<a class="pull-right" data-toggle="modal" href="{{Auth::guest() ? '#loginModal' : route('jogo.sugestao')}}">
+	<button  class="btn btn-default">Sugerir novo jogo <i class="fa fa-plus-circle"></i></button>
+</a>
 <div class="row pesquisa">
 	<form class="form-horizontal" role="form">
 		<div class="col-md-12">

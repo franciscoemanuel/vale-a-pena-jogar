@@ -1,4 +1,4 @@
-@extends('layout.admin')
+@extends('layout.principal')
 
 @section('styles')
 <link rel="stylesheet" type="text/css" href="{{asset('css/jquery-ui.min.css')}}">	
@@ -11,10 +11,16 @@
 	@if (!empty($errors->all()))
 	<div class="alert alert-danger">
 		<span aria-hidden="true" class="glyphicon glyphicon-exclamation-sign"></span>
-		<strong>Erro ao realizar cadastro.</strong>
+		<strong>Erro ao realizar cadastro da sugestão.</strong>
 	</div>
 	@endif
-	<form action="{{route('jogo.cadastro.submit')}}" method="post" enctype="multipart/form-data">
+	@if (Session::has('sucesso'))
+		<div class="alert alert-success">
+			<span aria-hidden="true" class="glyphicon glyphicon-ok"></span>
+			<strong>Sucesso - </strong> {{ Session::get('sucesso') }}
+		</div>
+	@endif
+	<form action="{{route('jogo.sugestao.submit')}}" method="post" enctype="multipart/form-data">
 		<input type="hidden" name="_token" value="{{csrf_token()}}" />
 
 		<div class="form-group{{ $errors->has('nomeJogo') ? ' has-error' : '' }}">
@@ -63,7 +69,6 @@
 		</div>
 		<div class="form-group{{ $errors->has('categorias') ? ' has-error' : '' }}">
 			<label for="categorias" class="control-label">Categorias</label>
-			<a title="Nova categoria" target="_blank" href="{{route('categoria.cadastro')}}"><i class="fa fa-plus-circle"></i></a>
 			<select class="form-control select2CategoriaAjax" name="categorias[]" multiple="multiple" required>
 				<option></option>
 			</select>
@@ -75,7 +80,6 @@
 		</div>
 		<div class="form-group{{ $errors->has('distribuidora') ? ' has-error' : '' }}">
 			<label for="distribuidora" class="control-label">Distribuidora do jogo</label>
-			<a title="Nova distribuidora" target="_blank" href="{{route('distribuidora.cadastro')}}"><i class="fa fa-plus-circle"></i></a>
 			<select class="form-control select2DistribuidoraAjax" name="distribuidora" required>
 				<option></option>
 			</select>
@@ -88,7 +92,6 @@
 
 		<div class="form-group{{ $errors->has('desenvolvedor') ? ' has-error' : '' }}">
 			<label for="desenvolvedor" class="control-label">Desenvolvedor</label>
-			<a title="Novo desenvolvedor" target="_blank" href="{{route('desenvolvedor.cadastro')}}"><i class="fa fa-plus-circle"></i></a>
 			<select class="form-control select2DesenvolvedorAjax" name="desenvolvedor" required>
 				<option></option>
 			</select>
@@ -106,7 +109,6 @@
 
 		<button class="btn btn-primary" type="submit">Cadastrar</button>
 	</form>
-	<br>
 </div>
 @stop
 

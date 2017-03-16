@@ -39,6 +39,7 @@
 </div>
 </div>
 
+
 @if (Session::has('sucesso'))
 <div class="col-xs-12">
     <div class="alert alert-success">
@@ -65,22 +66,19 @@
         <td>{{$jogo->distribuidora->nomeDistribuidora}}</td>
         <td>{{$jogo->imagemJogo}}</td>
         <td>
-            <a href="{{route('jogo.editar', $jogo->nomeJogo)}}"><i class="fa fa-pencil"></i></a>
+            <a href="{{route('admin.jogos.aprovar', $jogo->nomeJogo)}}"><i class="fa fa-eye"></i></a>
             <a href="#" data-toggle="confirmation" data-url="{{route('jogo.excluir', $jogo->idJogo)}}"><i class="fa fa-trash-o"></i></a>
         </td>
     </tr>
     @endforeach
 </table>
-
 @else
 <div class="col-xs-12">
-    <h2>Nenhum jogo aprovado</h2>
-    <hr>
+<h2>Sem jogos para aprovação</h2>
+<hr>
 </div>
 @endif
 @stop
-
-
 @section('scripts')
 <script src="{{asset('js/pesquisa.js')}}"></script>
 <script src="{{asset('js/bootstrap-confirmation.min.js')}}"></script>

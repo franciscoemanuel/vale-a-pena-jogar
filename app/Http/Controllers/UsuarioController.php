@@ -206,6 +206,16 @@ class UsuarioController extends Controller{
         \Session::flash('sucesso', 'Dados alterados com sucesso!');
         return redirect(route('usuario.dados'));
     }
+
+    //Desloga usuário da aplicação
+    public function logout(Request $request){
+        $this->guard()->logout();
+        if(!Auth::guard('admin')->user()){
+            $request->session()->flush();
+            $request->session()->regenerate();
+        }
+        return redirect(route('login'));
+    }
 }
 
 ?>

@@ -35,10 +35,13 @@ class AdminLoginController extends Controller
        ]);
    }
 
+   //Desloga administrador da aplicação
    public function logout(Request $request){
       Auth::guard('admin')->logout();     
-      $request->session()->flush();
-      $request->session()->regenerate();
+      if(!Auth::user()){
+          $request->session()->flush();
+          $request->session()->regenerate();
+      }
       return redirect(route('admin.login'));
    }
 }

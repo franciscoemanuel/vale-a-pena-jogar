@@ -15,10 +15,10 @@ class IndexController extends Controller
      */
     public function index()
     {
-    	$jogosMelhorAvaliados = Jogo::all()->sortByDesc('notaMedia')->take(4);
-    	$jogosLancadosRecentemente = Jogo::where('dataLancamento', '>=', \Carbon\Carbon::now()->subMonth()->format('Y-m-d'))
+    	$jogosMelhorAvaliados = Jogo::aprovados()->orderBy('notaMedia', 'desc')->get()->take(4);
+    	$jogosLancadosRecentemente = Jogo::aprovados()->where('dataLancamento', '>=', \Carbon\Carbon::now()->subMonth()->format('Y-m-d'))
         ->where('dataLancamento', '<=', \Carbon\Carbon::now()->format('Y-m-d'))->get()->take(4);
-    	$jogosEmBreve = Jogo::where('dataLancamento', '>', \Carbon\Carbon::now()->format('Y-m-d'))->get()->take(4);
+    	$jogosEmBreve = Jogo::aprovados()->where('dataLancamento', '>', \Carbon\Carbon::now()->format('Y-m-d'))->get()->take(4);
     	$listasMelhorAvaliadas = Lista::all()->sortByDesc('qtdCurtidas')->take(4);
     	$listasMaisComentadas = Lista::all()->sortByDesc('qtdComentarios')->take(4);
         return view('home', [

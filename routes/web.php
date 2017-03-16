@@ -35,6 +35,11 @@ Route::get('/jogos/{nomeJogo}', 'JogoController@show')->name('jogos.single');
 
 Route::get("/autocomplete/jogos", "JogoController@buscaJogosJson");
 
+Route::get('/sugestao', 'JogoController@sugestao')->name('jogo.sugestao')->middleware('auth');
+
+Route::post('/sugestao', 'JogoController@postSugestao')->name('jogo.sugestao.submit')->middleware('auth');
+
+
 /*Rotas declaradas para o controller de categorias*/
 
 Route::get('/autocomplete/categorias', 'CategoriaController@buscaCategoriasJson');
@@ -118,7 +123,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth:admin'], function(){
 	Route::get('/', 'AdminController@index')->name('admin.dashboard');	
 
 	//Jogos
-	Route::get('jogos', 'JogoController@adminIndex')->name('admin.jogos');
+	Route::get('jogos', 'JogoController@adminAprovados')->name('admin.jogos');
 
 	Route::get('jogos/cadastro', 'JogoController@create')->name('jogo.cadastro');
 
@@ -129,6 +134,14 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth:admin'], function(){
 	Route::post('jogos/editar/{nomeJogo}', 'JogoController@update')->name('jogo.editar.submit');
 
 	Route::delete('jogos/excluir/{id}', 'JogoController@destroy')->name('jogo.excluir');
+
+	Route::get('jogos/sugeridos', 'JogoController@adminSugeridos')->name('admin.jogos.sugeridos');
+
+	Route::get('jogos/aprovar/{nomeJogo}', 'JogoController@aprovar')->name('admin.jogos.aprovar');
+
+	Route::post('jogos/aprovar/{nomeJogo}', 'JogoController@postAprovar')->name('admin.jogos.aprovar.submit');
+
+
 	//Desenvolvedores
 	Route::get('desenvolvedores', 'DesenvolvedorController@adminIndex')->name('admin.desenvolvedores');
 

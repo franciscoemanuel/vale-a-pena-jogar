@@ -47,50 +47,28 @@
     <!-- Main Menu -->
     <div class="side-menu-container">
         <ul class="nav navbar-nav">
+            <!-- Dropdown-->
+            <li class="panel panel-default" id="dropdown">
+                <a data-toggle="collapse" href="#dropdown-lvl1">
+                    <span class="fa fa-gamepad"></span> Jogos<span class="caret"></span>
+                </a>
 
-            <li {{ Request::is('admin/jogos') ? 'class = active ' : null }}><a href="{{route('admin.jogos')}}"><span class="fa fa-gamepad"></span> Jogos</a></li>
+                <!-- Dropdown level 1 -->
+                <div id="dropdown-lvl1" class="panel-collapse in">
+                    <div class="panel-body">
+                        <ul class="nav navbar-nav">
+                            <li {{ Request::is('admin/jogos') ? 'class = active ' : null }}><a href="{{route('admin.jogos')}}"><i class="glyphicon glyphicon-ok"></i> Aprovados</a></li>
+                            <li {{ Request::is('admin/jogos/sugeridos') ? 'class = active ' : null }}><a href="{{route('admin.jogos.sugeridos')}}"><i class="glyphicon glyphicon-time"></i> Aguardando aprovação </a></li>
+                            <li {{ Request::is('admin/jogos/cadastro') ? 'class = active ' : null }}><a href="{{route('jogo.cadastro')}}"><i class="glyphicon glyphicon-plus"></i> Novo </a> </li>
+                        </ul>
+                    </div>
+                </div>
+            </li>
             <li {{ Request::is('admin/desenvolvedores') ? 'class = active ' : null }}><a href="{{route('admin.desenvolvedores')}}"><span class="fa fa-code"></span> Desenvolvedores</a></li>
             <li {{ Request::is('admin/distribuidoras') ? 'class = active ' : null }}><a href="{{route('admin.distribuidoras')}}"><i class="fa fa-truck"></i> Distribuidoras</a></li>
             <li {{ Request::is('admin/categorias') ? 'class = active ' : null }}><a href="{{route('admin.categorias')}}"><span class="fa fa-tags"></span> Categorias</a></li>
             <li {{ Request::is('admin/usuarios') ? 'class = active ' : null }}><a href="{{route('admin.usuarios')}}"><span class="fa fa-users"></span> Usuarios</a></li>
             <li><a href="{{route('admin.logout')}}"><span class="glyphicon glyphicon-log-out"></span> Sair</a></li>
-
-            <!-- Dropdown-->
-         <!--    <li class="panel panel-default" id="dropdown">
-                <a data-toggle="collapse" href="#dropdown-lvl1">
-                    <span class="glyphicon glyphicon-user"></span> Sub Level <span class="caret"></span>
-                </a>
- -->
-                <!-- Dropdown level 1 -->
-                <!-- <div id="dropdown-lvl1" class="panel-collapse collapse">
-                    <div class="panel-body">
-                        <ul class="nav navbar-nav">
-                            <li><a href="#">Link</a></li>
-                            <li><a href="#">Link</a></li>
-                            <li><a href="#">Link</a></li> -->
-
-                            <!-- Dropdown level 2 -->
-                           <!--  <li class="panel panel-default" id="dropdown">
-                                <a data-toggle="collapse" href="#dropdown-lvl2">
-                                    <span class="glyphicon glyphicon-off"></span> Sub Level <span class="caret"></span>
-                                </a>
-                                <div id="dropdown-lvl2" class="panel-collapse collapse">
-                                    <div class="panel-body">
-                                        <ul class="nav navbar-nav">
-                                            <li><a href="#">Link</a></li>
-                                            <li><a href="#">Link</a></li>
-                                            <li><a href="#">Link</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </li> -->
-
-            <!-- <li><a href="#"><span class="glyphicon glyphicon-signal"></span> Link</a></li> -->
-
         </ul>
     </div><!-- /.navbar-collapse -->
 </nav>

@@ -23,7 +23,7 @@
 	<div class="row">
 		@foreach($usuarios as $usuario)
 		<div class="col-lg-3 col-md-4 col-sm-6 profile">
-		  <div class="img-box col-md-10">
+		  <div class="img-box col-md-10 col-xs-8">
 		    <img src="{{asset('images/usuarios/avatar.png')}}" class="img-responsive img-circle">
 		    <ul class="text-center">
 		      <a href="{{route('usuario', $usuario->nomeUsuario)}}#jogos"><span class="badge">{{$usuario->jogos->count()}} {{str_plural('jogos',$usuario->jogos->count())}}</span><li><i class="fa fa-gamepad"></i></li></a>
@@ -31,8 +31,10 @@
 		      <a href="{{route('usuario', $usuario->nomeUsuario)}}#criticas"><span class="badge">{{$usuario->criticas->count()}} {{str_plural('criticas',$usuario->criticas->count())}}</span><li><i class="fa fa-star-half-o"></i></li></a>
 		    </ul>
 		  </div>
-		  <a href="{{route('usuario', $usuario->nomeUsuario)}}"><h1>{{str_limit($usuario->nomeUsuario, 31)}}</h1></a>
-		  <h2><span>{{$usuario->sexoFormatado}}</span>, <span>{{$usuario->idade}}</span></h2>
+		  <div class="col-xs-10 col-xs-push-1">
+			  <a href="{{route('usuario', $usuario->nomeUsuario)}}"><h1>{{str_limit($usuario->nomeUsuario, 31)}}</h1></a>
+			  <h2><span>{{$usuario->sexoFormatado}}</span>, <span>{{$usuario->idade}}</span></h2>
+		  </div>
 		</div>
 		@endforeach
 	</div>

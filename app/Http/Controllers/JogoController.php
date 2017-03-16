@@ -19,6 +19,8 @@ class JogoController extends Controller
 	//Mostra página com todos os jogos
 	public function index(Request $request){
 		$jogos = new Jogo;
+		
+		$jogos = $jogos->aprovados();
 
 		$query = $request->has('busca') ? $request->busca : '';
 		
@@ -59,11 +61,12 @@ class JogoController extends Controller
 				'quantidadeJogadores' => $request->input('quantidadeJogadores'),
 				'idDistribuidora' => $request->input('distribuidora'),
 				'idDesenvolvedor' => $request->input('desenvolvedor'),
-				'imagemJogo'  => isset($filename) ? $filename : 'placeholder.png'
+				'imagemJogo'  => isset($filename) ? $filename : 'placeholder.png',
+				'aprovado' => true,
  			]);
 		//cadastra as categorias na tabela pivô
-		$jogo->categorias()->sync($request->categorias, false);
-
+		$jogo->categorias()->sync($request->categorias, true);
+		\Session::flash('sucesso', 'Jogo cadastrado com sucesso!');
 		return redirect(route('admin.jogos'));
 	}
 
@@ -106,23 +109,26 @@ class JogoController extends Controller
 		$jogo->dataLancamento = $request->dataLancamento;
 		$jogo->idDistribuidora = $request->distribuidora;
 		$jogo->idDesenvolvedor = $request->desenvolvedor;
+		$jogo->quantidadeJogadores = $request->quantidadeJogadores;
 		if ($request->hasFile('imagemJogo')){
 			$imagemJogo = $request->file('imagemJogo');
 			$filename = time().'.'.$imagemJogo->getClientOriginalExtension();
 			Image::make($imagemJogo)->fit(600, 300)->save(public_path('images/jogos/'.$filename));
 			$imagemAntiga = $jogo->imagemJogo;
 			$jogo->imagemJogo = $filename;
-			Storage::disk('jogos')->delete($imagemAntiga);
+			if ($imagemAntiga != 'placeholder.png') 
+				Storage::disk('jogos')->delete($imagemAntiga);
 		}
 		$jogo->save();
-		$jogo->categorias()->sync($request->categorias, false);
+		$jogo->categorias()->sync($request->categorias, true);
 		return redirect(route('admin.jogos'));
 	}
 
 	//Deleta o jogo especificado no parâmetro do método
 	public function destroy($id){
 		$jogo = Jogo::find($id);
-		Storage::disk('jogos')->delete($jogo->imagemJogo);
+		if ($jogo->imagemJogo != 'placeholder.png') 
+			Storage::disk('jogos')->delete($jogo->imagemJogo);
 		$jogo->delete();
 		return response()->json([], 200);
 	}
@@ -144,10 +150,12 @@ class JogoController extends Controller
 
 	/**
 	 * Retorna página de jogos do dashboard
-	 * @return [type] [description]
+	 * @return \Illuminate\Http\Response
 	 */
-	public function adminIndex(Request $request){
+	public function adminAprovados(Request $request){
 		$jogos = new Jogo;
+		
+		$jogos = $jogos->aprovados();
 
 		$query = $request->has('busca') ? $request->busca : '';
 		
@@ -167,5 +175,104 @@ class JogoController extends Controller
 		return view('admin.jogos.index')->withJogos($jogos);
 	}
 
+	/**
+	 * Retorna página de jogos do dashboard
+	 * @return \Illuminate\Http\Response
+	 */
+	public function adminSugeridos(Request $request){
+		$jogos = new Jogo;
+
+		$jogos = $jogos->sugeridos();
+
+		$query = $request->has('busca') ? $request->busca : '';
+		
+		$ordem = $request->has('ordem') ? $request->ordem : 'notaMedia';
+
+		$ascDesc = $ordem == "nomeJogo" ? 'asc' : 'desc';
+
+		$jogos = $jogos->where('nomeJogo', 'LIKE', "%$query%");
+
+		$jogos = $jogos->orderBy($ordem, $ascDesc);
+
+		$jogos = $jogos->paginate(10)->appends([
+			'busca' => $request->busca,
+			'ordem' => $request->ordem
+		]);
+
+		return view('admin.jogos.sugeridos')->withJogos($jogos);
+	}
+
+	/**
+	 * Retorna página de cadastro de sugestão de jogos
+	 * @return \Illuminate\Http\Response
+	 */
+	public function sugestao(){
+		return view('jogo.sugestao');
+	}
+
+	/**
+	 * Cadastra sugestão.
+	 *
+	 * @param  \Illuminate\Http\Request  $request
+	 * @return \Illuminate\Http\Response
+	 */
+	public function postSugestao(CadastroJogoRequest $request){
+		$jogo = new Jogo;
+		$jogo->nomeJogo = $request->nomeJogo;
+		$jogo->descricao = $request->descricao;
+		$jogo->dataLancamento = $request->dataLancamento;
+		$jogo->idDistribuidora = $request->distribuidora;
+		$jogo->idDesenvolvedor = $request->desenvolvedor;
+		$jogo->quantidadeJogadores = $request->quantidadeJogadores;
+		if ($request->hasFile('imagemJogo')){
+			$imagemJogo = $request->file('imagemJogo');
+			$filename = time().'.'.$imagemJogo->getClientOriginalExtension();
+			Image::make($imagemJogo)->fit(600, 300)->save(public_path('images/jogos/'.$filename));
+		}
+		$jogo->aprovado = false;
+		$jogo->save();
+		$jogo->categorias()->sync($request->categorias, true);
+		\Session::flash('sucesso', 'Sugestão de jogo cadastrada com sucesso');
+		return redirect(route('jogo.sugestao'));
+	}
+
+	/**
+	 * Mostra página para avaliação da sugestão do jogo
+	 * @return \Illuminate\Http\Response
+	 */
+	public function aprovar($nomeJogo){
+		$jogo = Jogo::where('nomeJogo', $nomeJogo)->firstOrFail();
+		return view('admin.jogos.aprovar')->withJogo($jogo);
+	}
+
+
+	/**
+	 * Aprova jogo.
+	 *
+	 * @param  \Illuminate\Http\Request  $request
+	 * @return \Illuminate\Http\Response
+	 */
+	public function postAprovar(EditarJogoRequest $request, $nomeJogo){
+		$jogo = Jogo::where('nomeJogo', $nomeJogo)->firstOrFail();
+		$jogo->nomeJogo = $request->nomeJogo;
+		$jogo->descricao = $request->descricao;
+		$jogo->dataLancamento = $request->dataLancamento;
+		$jogo->idDistribuidora = $request->distribuidora;
+		$jogo->idDesenvolvedor = $request->desenvolvedor;
+		$jogo->quantidadeJogadores = $request->quantidadeJogadores;
+		if ($request->hasFile('imagemJogo')){
+			$imagemJogo = $request->file('imagemJogo');
+			$filename = time().'.'.$imagemJogo->getClientOriginalExtension();
+			Image::make($imagemJogo)->fit(600, 300)->save(public_path('images/jogos/'.$filename));
+			$imagemAntiga = $jogo->imagemJogo;
+			$jogo->imagemJogo = $filename;
+			if (imagemAntiga != 'placeholder.png') Storage::disk('jogos')->delete($imagemAntiga);
+		}
+		$jogo->aprovado = true;
+		$jogo->save();
+		$jogo->categorias()->sync($request->categorias, true);
+		\Session::flash('sucesso', 'Jogo aprovado com sucesso!');
+		return redirect(route('admin.jogos.sugeridos'));
+	}
 
 }

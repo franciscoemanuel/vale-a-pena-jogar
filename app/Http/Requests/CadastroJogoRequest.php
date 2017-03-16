@@ -30,7 +30,7 @@ class CadastroJogoRequest extends FormRequest
         return [
             'required' => 'o campo :attribute é obrigatório',
             'dataLancamento.date_format' => 'Insira uma data válida no formato: dd/mm/aaaa',
-            'nomeJogo.unique' => 'Este jogo já foi cadastrado'
+            'nomeJogo.unique' => 'Este jogo já foi cadastrado ou sugerido'
         ];
     }
 }
