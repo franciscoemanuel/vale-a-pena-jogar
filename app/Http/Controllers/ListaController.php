@@ -73,7 +73,7 @@ class ListaController extends Controller
      */
     public function show($id)
     {
-        $lista = \vapj\lista::where('idLista', $id)->firstOrFail();
+        $lista = \vapj\Lista::where('idLista', $id)->firstOrFail();
         $usuarioCurtiuLista =  \Auth::check() ? \Auth::user()->curtiuLista($id) : false;
         $comentarioUsuario = \Auth::check() ? \Auth::user()->comentarios()->where('idLista', $id)->first() : null;
         JavaScript::put([
@@ -99,7 +99,7 @@ class ListaController extends Controller
      */
     public function edit($id)
     {
-        $lista = \vapj\lista::where('idLista', $id)->firstOrFail();
+        $lista = \vapj\Lista::where('idLista', $id)->firstOrFail();
         return view("lista.editar")->withLista($lista);
     }
 
@@ -112,7 +112,7 @@ class ListaController extends Controller
      */
     public function update(Request $request, $id)
     {
-       $lista = \vapj\lista::where('idLista', $id)->firstOrFail();
+       $lista = \vapj\Lista::where('idLista', $id)->firstOrFail();
        $lista->nomeLista = $request->nomeLista;
        $lista->descricaoLista = $request->descricaoLista;
        $lista->jogos()->sync($request->jogos, true);
